@@ -5,10 +5,21 @@ import 'package:product_listing_app/core/constants/app_assets.dart';
 import 'package:product_listing_app/core/constants/app_text_styles.dart';
 import 'package:product_listing_app/core/theme/app_colors.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
-import 'package:product_listing_app/core/widgets/animated_svg.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProjectCard extends StatelessWidget {
-  const ProjectCard({super.key});
+  const ProjectCard({super.key, 
+  required this.imageUrl, 
+  required this.review, 
+  required this.actualPrice, 
+  required this.salePrice, 
+  required this.productName});
+
+  final String imageUrl;
+  final String review;
+  final String actualPrice;
+  final String salePrice;
+  final String productName;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +30,8 @@ class ProjectCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(Responsive.radius(8)),
-              child: Image.asset(AppAssets.jaggery)
+              child: CachedNetworkImage(
+                imageUrl: imageUrl),
             ),
             Positioned(
               top: 8.h,             
@@ -35,12 +47,12 @@ class ProjectCard extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  '₹1000',
+                  '₹$actualPrice',
                   style: AppTextStyles.offerText
                 ),
                 SizedBox(width: Responsive.width(5)),
                 Text(
-                  '₹599',
+                  '₹$salePrice',
                   style: AppTextStyles.priceText
                 ),
               ],
@@ -54,7 +66,7 @@ class ProjectCard extends StatelessWidget {
                 ),
                 SizedBox(width: Responsive.width(3)),
                 Text(
-                  '4.5',
+                  review,
                   style: AppTextStyles.reviewText
                 ),
               ],
@@ -62,7 +74,7 @@ class ProjectCard extends StatelessWidget {
           ],
         ),
         Text(
-          'Grain Peppers',
+          productName,
           style: AppTextStyles.productText)
       ],
     );

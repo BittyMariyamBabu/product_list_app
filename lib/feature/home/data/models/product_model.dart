@@ -13,10 +13,10 @@ class ProductModel extends ProductEntity {
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       id: json['id'], 
-      salePrice: json['price'],
-      actualPrice: json['price'],
-      imageUrl: json['image_url'] as String,
-      productName: '', 
-      review: '');
+      salePrice: json['sale_price'],
+      actualPrice: json['mrp'],
+      imageUrl: json['featured_image'] as String,
+      productName: json['name'] as String, 
+      review: json['avg_rating']);
   }
 }

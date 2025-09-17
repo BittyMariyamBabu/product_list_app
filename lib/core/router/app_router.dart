@@ -7,8 +7,10 @@ import 'package:product_listing_app/feature/auth/presentation/screens/name_scree
 import 'package:product_listing_app/feature/auth/presentation/screens/otp_screen.dart';
 import 'package:product_listing_app/feature/bottom_bar/presentation/bloc/bottom_nav_bloc.dart';
 import 'package:product_listing_app/feature/bottom_bar/presentation/screens/bottom_screen.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/product/product_bloc.dart';
 import 'package:product_listing_app/feature/splash/presentation/bloc/splash_bloc.dart';
 import 'package:product_listing_app/feature/splash/presentation/screens/splash_screen.dart';
+import 'package:product_listing_app/injection.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: AppRoutes.splash,
@@ -23,10 +25,13 @@ final GoRouter router = GoRouter(
     routeMethod(path: AppRoutes.otp,screen: OtpScreen()),
     routeMethod(path: AppRoutes.fullname,screen: NameScreen()),
     routeMethod(path: AppRoutes.main,
-    screen: BlocProvider(
-        create: (_) => BottomNavBloc(),
-        child: const MainScreen()
-      ),
+    screen: MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => BottomNavBloc()),
+        BlocProvider(create: (_) => sl<ProductBloc>()), 
+      ], 
+      child: MainScreen(),
+    ),
     ),
     // routeMethod(path: AppRoutes.home,screen: HomeScreen()),
   ],

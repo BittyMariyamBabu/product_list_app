@@ -3,8 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:product_listing_app/core/constants/app_strings.dart';
 import 'package:product_listing_app/core/theme/app_themes.dart';
 import 'package:product_listing_app/core/router/app_router.dart';
+import 'package:product_listing_app/injection.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await init(); // 
   runApp(const MyApp());
 }
 

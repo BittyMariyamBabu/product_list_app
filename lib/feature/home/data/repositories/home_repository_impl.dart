@@ -1,34 +1,28 @@
 
-// import 'package:product_listing_app/feature/home/domain/entities/product_entity.dart';
+import 'package:product_listing_app/core/network/api_services.dart';
+import 'package:product_listing_app/core/network/app_urls.dart';
+import 'package:product_listing_app/feature/home/data/models/product_model.dart';
+import 'package:product_listing_app/feature/home/domain/entities/banner_entity.dart';
+import 'package:product_listing_app/feature/home/domain/entities/product_entity.dart';
+import 'package:product_listing_app/feature/home/domain/repositories/home_repository.dart';
 
-// class HomeRepositoryImpl implements HomeRepository {
-//   @override
-//   Future<List<ProductEntity>> getProducts() async {
-//     await Future.delayed(const Duration(seconds: 1));
-//     return [
-//       ProductModel(
-//           id: '1',
-//           name: 'Product 1',
-//           imageUrl: 'https://via.placeholder.com/150',
-//           actualPrice: 120,
-//           salePrice: 100,
-//           review: 4.5),
-//       ProductModel(
-//           id: '2',
-//           name: 'Product 2',
-//           imageUrl: 'https://via.placeholder.com/150',
-//           actualPrice: 200,
-//           salePrice: 150,
-//           review: 4.0),
-//     ];
-//   }
+class HomeRepositoryImpl implements HomeRepository {
+  final ApiService apiClient;
 
-//   @override
-//   Future<List<BannerEntity>> getBanners() async {
-//     await Future.delayed(const Duration(seconds: 1));
-//     return [
-//       BannerModel(id: '1', imageUrl: 'https://via.placeholder.com/350x150'),
-//       BannerModel(id: '2', imageUrl: 'https://via.placeholder.com/350x150'),
-//     ];
-//   }
-// }
+  HomeRepositoryImpl({required this.apiClient});
+  
+  @override
+  Future<List<BannerEntity>> getBanners() async {
+    final data = await apiClient.get(AppUrls.bannerList);
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<ProductEntity>> getProduct() async {
+    final data = await apiClient.get(AppUrls.productList);
+    final products = (data as List)
+      .map((e) => ProductModel.fromJson(e) as ProductEntity)
+      .toList();
+    return products;
+  }
+}

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:product_listing_app/core/constants/app_text_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:product_listing_app/core/widgets/common_title.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/product/product_bloc.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/product/product_event.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/product/product_state.dart';
 import 'package:product_listing_app/feature/home/presentation/widgets/project_card.dart';
 
 class ListProjects extends StatelessWidget {
@@ -15,21 +18,42 @@ class ListProjects extends StatelessWidget {
       children: [
         CommonTitle(label: label),
         SizedBox(height: Responsive.height(15)),
-        GridView.builder(
-          shrinkWrap: true,                // tells GridView to take only needed space
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.zero,
-          itemCount: 6,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,          // 2 items per row
-            mainAxisSpacing: 16,         // vertical spacing
-            crossAxisSpacing: 16,        // horizontal spacing
-            childAspectRatio: 0.7,      // width / height ratio of each card
-          ),
-          itemBuilder: (context, index) {
-            return ProjectCard();
-          },
-          ),
+        BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is ProductInitial) {
+            context.read<ProductBloc>().add(LoadProduct());
+            return const Center(child: Text("Loading..."));
+          } else if (state is ProductLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is ProductLoaded) {
+            return GridView.builder(
+              shrinkWrap: true,                // tells GridView to take only needed space
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: state.product.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,          // 2 items per row
+                mainAxisSpacing: 16,         // vertical spacing
+                crossAxisSpacing: 16,        // horizontal spacing
+                childAspectRatio: 0.7,      // width / height ratio of each card
+              ),
+              itemBuilder: (context, index) {
+                final data = state.product[index];
+                return ProjectCard(
+                  imageUrl: data.imageUrl, 
+                  review: data.review.toString(), 
+                  actualPrice: data.actualPrice.toString(), 
+                  salePrice: data.salePrice.toString(), 
+                  productName: data.productName
+                );
+              },
+            );
+          } else if (state is ProductError) {
+            return Center(child: Text(state.message));
+          }
+          return const SizedBox();
+        }
+        ),
           SizedBox(height: Responsive.height(10)),
       ],
     );

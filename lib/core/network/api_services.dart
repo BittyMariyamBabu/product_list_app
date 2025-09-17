@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:product_listing_app/core/network/app_urls.dart';
 import 'package:product_listing_app/core/network/exception.dart';
 
 abstract class ApiService {
@@ -6,24 +7,18 @@ abstract class ApiService {
   Future<dynamic> post(String endpoint, {Map<String, dynamic>? body});
 }
 
-class ApiClient {
-  static final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: 'https://api.example.com/',
-      connectTimeout: Duration(),
-      receiveTimeout: Duration(),
-      headers: {'Content-Type': 'application/json'},
-    ),
-  );
-
-  static Dio get instance => _dio;
-}
-
-
 class ApiServiceImpl implements ApiService {
   final Dio _dio;
 
-  ApiServiceImpl({Dio? dio}) : _dio = dio ?? ApiClient.instance;
+  ApiServiceImpl({Dio? dio})
+      : _dio = dio ?? Dio(
+          BaseOptions(
+            baseUrl: AppUrls.baseUrl, 
+            connectTimeout: const Duration(seconds: 10),
+            receiveTimeout: const Duration(seconds: 10),
+            headers: {'Content-Type': 'application/json'},
+          ),
+        );
 
   @override
   Future<dynamic> get(String endpoint, {Map<String, dynamic>? queryParameters}) async {

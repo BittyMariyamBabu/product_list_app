@@ -1,6 +1,7 @@
 
 import 'package:product_listing_app/core/network/api_services.dart';
 import 'package:product_listing_app/core/network/app_urls.dart';
+import 'package:product_listing_app/feature/home/data/models/banner_model.dart';
 import 'package:product_listing_app/feature/home/data/models/product_model.dart';
 import 'package:product_listing_app/feature/home/domain/entities/banner_entity.dart';
 import 'package:product_listing_app/feature/home/domain/entities/product_entity.dart';
@@ -14,7 +15,10 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future<List<BannerEntity>> getBanners() async {
     final data = await apiClient.get(AppUrls.bannerList);
-    throw UnimplementedError();
+    final banners = (data as List)
+      .map((e) => BannerModel.fromJson(e) as BannerEntity)
+      .toList();
+    return banners;
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:product_listing_app/core/constants/app_paddings.dart';
 import 'package:product_listing_app/core/constants/app_strings.dart';
@@ -7,17 +8,28 @@ import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:product_listing_app/core/utils/validators.dart';
 import 'package:product_listing_app/core/widgets/custom_button.dart';
 import 'package:product_listing_app/core/widgets/custom_textfield.dart';
+import 'package:product_listing_app/feature/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'package:product_listing_app/feature/auth/presentation/bloc/auth/auth_event.dart';
+import 'package:product_listing_app/feature/auth/presentation/bloc/auth/auth_state.dart';
 import 'package:product_listing_app/feature/auth/presentation/widgets/auth_bottom_text.dart';
 import 'package:product_listing_app/feature/auth/presentation/widgets/top_widget.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
+  // Outside the build, because they will be recreated every time the widget rebuilds.
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController phoneController = TextEditingController();
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
+  void _onLoginPressed(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<AuthBloc>().add(
+            LoginRequested(
+              phoneController.text.trim(),
+            ),
+          );
+    }
+  }
 
-class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: AppPadding.screenPadding,
           child: SingleChildScrollView(
             child: Form(
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -43,18 +56,33 @@ class _LoginScreenState extends State<LoginScreen> {
                         flex: 6,
                         child: CustomTextField(
                           keyboardType: TextInputType.phone,
-                          controller: TextEditingController(), 
+                          controller: phoneController, 
                           validator:(phone) => AppValidators.phone(phone),
                           hintText: AppStrings.enterPhone),
                       ),
                     ],
                   ),
                   SizedBox(height: Responsive.height(20)),
-                  CustomButton(
-                    text: AppStrings.continueText, 
-                    onPressed:() {
-                      context.go(AppRoutes.otp);
-                    },),
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthSuccess) {
+                        context.pushNamed(AppRoutes.otp);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Login Success!')),
+                        );
+                      } else if (state is AuthFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.message)),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      return CustomButton(
+                        isLoading: state is AuthLoading,
+                        text: AppStrings.continueText, 
+                        onPressed:() => _onLoginPressed(context));
+                    }
+                  ),
                   SizedBox(height: Responsive.height(20)),
                   const AuthBottomText()
                 ],),

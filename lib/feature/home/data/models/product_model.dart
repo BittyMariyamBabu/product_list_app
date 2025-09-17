@@ -1,6 +1,8 @@
 import 'package:product_listing_app/feature/home/domain/entities/product_entity.dart';
 
+/// A data model representing a product, extending [ProductEntity]
 class ProductModel extends ProductEntity {
+  /// All fields are required and passed to the [ProductEntity] constructor.
   ProductModel({
     required super.id,
     required super.salePrice, 

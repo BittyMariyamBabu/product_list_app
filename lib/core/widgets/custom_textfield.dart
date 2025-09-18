@@ -75,13 +75,19 @@ class CustomTextField extends StatelessWidget {
           prefix: prefix,
           contentPadding: isSearch 
             ? EdgeInsets.symmetric(
-              horizontal: Responsive.width(8),
+              horizontal: Responsive.width(14),
               vertical: Responsive.height(10))
             : EdgeInsets.symmetric(vertical: Responsive.height(10)),
           border: AppDecorations.inputBorder,
-          enabledBorder: AppDecorations.inputBorder,
-          focusedBorder: AppDecorations.inputBorder,
-          errorBorder: AppDecorations.inputBorder,
+          enabledBorder: isSearch 
+          ? AppDecorations.inputBorder1
+          : AppDecorations.inputBorder,
+          focusedBorder: isSearch 
+          ? AppDecorations.inputBorder1
+          : AppDecorations.inputBorder,
+          errorBorder: isSearch 
+          ? AppDecorations.inputBorder1
+          : AppDecorations.inputBorder,
         ),
       ),
     );

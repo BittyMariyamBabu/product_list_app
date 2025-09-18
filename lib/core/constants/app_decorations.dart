@@ -15,6 +15,10 @@ class AppDecorations {
     borderSide: BorderSide(color: AppColors.underLineColor),
   );
 
+  static final UnderlineInputBorder inputBorder1 = UnderlineInputBorder(
+    borderSide: BorderSide(color: AppColors.background),
+  );
+
   static final OutlineInputBorder searchBorder = OutlineInputBorder(
     borderSide: BorderSide(color: AppColors.greyText),
     borderRadius: borderRadius45

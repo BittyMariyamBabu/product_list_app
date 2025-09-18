@@ -5,7 +5,7 @@ import 'package:product_listing_app/core/constants/app_text_styles.dart';
 import 'package:product_listing_app/core/theme/app_colors.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:product_listing_app/core/widgets/animated_svg.dart';
+import 'package:product_listing_app/feature/home/presentation/widgets/animated_svg.dart';
 import 'package:product_listing_app/feature/wishlist/domain/entities/wishlist_entity.dart';
 
 class ProjectCard extends StatelessWidget {

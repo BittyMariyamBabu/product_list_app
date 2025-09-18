@@ -11,8 +11,8 @@ class AppStrings {
   static const String phone= 'Phone';
   static const String name = 'Name';
   static const String otpVerification ='OTP VERIFICATION';
-  static const String enterOtp ='Enter the otp sent to:';
-  static const String otp ='OTP IS 4749';
+  static const String enterOtp ='Enter the otp sent to: ';
+  static const String otp ='OTP IS ';
   static const String codeNotReceived = 'Don’t receive code ?';
   static const String resend = 'Re-send';
   static const String home = 'Home';

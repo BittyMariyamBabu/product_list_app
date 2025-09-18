@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
   void _onLoginPressed(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-            LoginRequested(
+            VerifyPhoneEvent(
               phoneController.text.trim(),
             ),
           );
@@ -48,6 +48,7 @@ class LoginScreen extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: CustomTextField(
+                          readOnly: true,
                           controller: TextEditingController(), 
                           hintText: "+91"),
                       ),
@@ -63,29 +64,31 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: Responsive.height(20)),
-                  CustomButton(
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state is VerifyOtpSuccess) {
+                        context.pushNamed(
+                          RouteName.otp,
+                          extra: {
+                            'phone': phoneController.text.trim(),
+                            'otp': state.otp.otp, //extract the String from your entity
+                          });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Login Success!')),
+                        );
+                      } else if (state is AuthFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.message)),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      return CustomButton(
+                        isLoading: state is AuthLoading,
                         text: AppStrings.continueText, 
-                        onPressed:() => context.go(AppRoutes.otp)),
-                  // BlocConsumer<AuthBloc, AuthState>(
-                  //   listener: (context, state) {
-                  //     if (state is AuthSuccess) {
-                  //       context.pushNamed(AppRoutes.otp);
-                  //       ScaffoldMessenger.of(context).showSnackBar(
-                  //         const SnackBar(content: Text('Login Success!')),
-                  //       );
-                  //     } else if (state is AuthFailure) {
-                  //       ScaffoldMessenger.of(context).showSnackBar(
-                  //         SnackBar(content: Text(state.message)),
-                  //       );
-                  //     }
-                  //   },
-                  //   builder: (context, state) {
-                  //     return CustomButton(
-                  //       isLoading: state is AuthLoading,
-                  //       text: AppStrings.continueText, 
-                  //       onPressed:() => _onLoginPressed(context));
-                  //   }
-                  // ),
+                        onPressed:() => _onLoginPressed(context));
+                    }
+                  ),
                   SizedBox(height: Responsive.height(20)),
                   const AuthBottomText()
                 ],),

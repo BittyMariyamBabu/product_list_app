@@ -9,23 +9,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final RegisterUseCase signupUseCase;
 
   AuthBloc({required this.loginUseCase,required this.signupUseCase}) : super(AuthInitial()) {
-    on<LoginRequested>((event, emit) async {
+    on<VerifyPhoneEvent>((event, emit) async {
       emit(AuthLoading());
       try {
         final user = await loginUseCase(phone: event.phone);
-        emit(AuthSuccess(user));
+        emit(VerifyOtpSuccess(user));
+        print('[AuthBloc] Login success: ${user.otp}');
       } catch (e) {
         emit(AuthFailure(e.toString()));
+        print('[AuthBloc] Login error: ${e.toString()}');
       }
     });
 
-    on<SignupRequested>((event, emit) async {
+    on<SignUpEvent>((event, emit) async {
       emit(AuthLoading());
       try {
         final user = await signupUseCase(name: event.name,phone: event.phone);
         emit(AuthSuccess(user));
+        print('[AuthBloc] SignUp success: ${user.token}');
       } catch (e) {
         emit(AuthFailure(e.toString()));
+        print('[AuthBloc] SignUp error: ${e.toString()}');
       }
     });
   }

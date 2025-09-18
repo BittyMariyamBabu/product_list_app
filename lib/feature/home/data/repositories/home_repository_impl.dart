@@ -14,7 +14,7 @@ class HomeRepositoryImpl implements HomeRepository {
   
   @override
   Future<List<BannerEntity>> getBanners() async {
-    final data = await apiClient.get(AppUrls.bannerList);
+    final data = await apiClient.get(endpoint: AppUrls.bannerList);
     final banners = (data as List)
       .map((e) => BannerModel.fromJson(e) as BannerEntity)
       .toList();
@@ -23,7 +23,7 @@ class HomeRepositoryImpl implements HomeRepository {
 
   @override
   Future<List<ProductEntity>> getProduct() async {
-    final data = await apiClient.get(AppUrls.productList);
+    final data = await apiClient.get(endpoint: AppUrls.productList);
     final products = (data as List)
       .map((e) => ProductModel.fromJson(e).toEntity())
       .toList();

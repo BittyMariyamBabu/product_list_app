@@ -3,8 +3,8 @@ import 'package:product_listing_app/core/network/app_urls.dart';
 import 'package:product_listing_app/core/network/exception.dart';
 
 abstract class ApiService {
-  Future<dynamic> get(String endpoint, {Map<String, dynamic>? queryParameters});
-  Future<dynamic> post(String endpoint, {Map<String, dynamic>? body});
+  Future<dynamic> get({required String endpoint,Map<String, dynamic>? queryParameters});
+  Future<dynamic> post({required String endpoint, required Map<String, dynamic>? body});
 }
 
 class ApiServiceImpl implements ApiService {
@@ -21,7 +21,7 @@ class ApiServiceImpl implements ApiService {
         );
 
   @override
-  Future<dynamic> get(String endpoint, {Map<String, dynamic>? queryParameters}) async {
+  Future<dynamic> get({required String endpoint, Map<String, dynamic>? queryParameters}) async {
     try {
       final response = await _dio.get(endpoint, queryParameters: queryParameters);
       return _handleResponse(response);
@@ -31,7 +31,7 @@ class ApiServiceImpl implements ApiService {
   }
 
   @override
-  Future<dynamic> post(String endpoint, {Map<String, dynamic>? body}) async {
+  Future<dynamic> post({required String endpoint, Map<String, dynamic>? body}) async {
     try {
       final response = await _dio.post(endpoint, data: body);
       return _handleResponse(response);

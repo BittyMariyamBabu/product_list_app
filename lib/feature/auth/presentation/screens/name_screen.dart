@@ -24,7 +24,7 @@ class NameScreen extends StatelessWidget {
   void _onSignUpPressed(BuildContext context) {
     if (_formKey1.currentState!.validate()) {
       context.read<AuthBloc>().add(
-            SignupRequested(
+            SignUpEvent(
               nameController.text.trim(),
               phoneController.text.trim(),
             ),
@@ -34,6 +34,11 @@ class NameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Extract plain phone value from extra
+    final args = GoRouterState.of(context).extra as Map<String, dynamic>?;
+    final phone = args?['phone'] ?? '';
+    phoneController.text = phone;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -49,33 +54,30 @@ class NameScreen extends StatelessWidget {
                   ),
                   SizedBox(height: Responsive.height(20)),
                   CustomTextField(
-                    controller: TextEditingController(), 
+                    controller: nameController, 
                     validator:(name) =>AppValidators.fullName(name),
                     hintText: AppStrings.enterName),
                   SizedBox(height: Responsive.height(20)),
-                  CustomButton(
-                        text: AppStrings.continueText, 
-                        onPressed:() => context.go(AppRoutes.main)),
-                  // BlocConsumer<AuthBloc, AuthState>(
-                  //   listener: (context, state) {
-                  //     if (state is AuthSuccess) {
-                  //       context.pushNamed(AppRoutes.main);
-                  //       ScaffoldMessenger.of(context).showSnackBar(
-                  //         const SnackBar(content: Text('Sign Up Success!')),
-                  //       );
-                  //     } else if (state is AuthFailure) {
-                  //       ScaffoldMessenger.of(context).showSnackBar(
-                  //         SnackBar(content: Text(state.message)),
-                  //       );
-                  //     }
-                  //   },
-                  //   builder: (context, state) {
-                  //     return CustomButton(
-                  //       text: AppStrings.submit, 
-                  //       onPressed:() => _onSignUpPressed(context)
-                  //     );
-                  //   }
-                  // ),
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthSuccess) {
+                        context.pushNamed(RouteName.main);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Sign Up Success!')),
+                        );
+                      } else if (state is AuthFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.message)),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      return CustomButton(
+                        text: AppStrings.submit, 
+                        onPressed:() => _onSignUpPressed(context)
+                      );
+                    }
+                  ),
                   SizedBox(height: Responsive.height(20)),
                 ],),
             ),

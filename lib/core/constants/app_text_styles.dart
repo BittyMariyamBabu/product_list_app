@@ -4,6 +4,41 @@ import 'package:product_listing_app/core/utils/responsive.dart';
 
 class AppTextStyles {
 
+  static TextStyle otpLabel = TextStyle(     
+    fontWeight: FontWeight.w700,    
+    fontSize: Responsive.fontSize(18),                   
+    height: 1.0,     
+    color: AppColors.textPrimary                    
+  );
+
+  static TextStyle otpLabel1 = TextStyle(    
+    fontWeight: FontWeight.w400,   
+    fontSize: Responsive.fontSize(14),
+    height: 1.0, 
+    color: AppColors.greyText    
+  );
+
+  static TextStyle otpLabel2 = TextStyle(
+    fontWeight: FontWeight.w700,    
+    fontSize: Responsive.fontSize(14),
+    height: 1.0,
+    color: AppColors.textPrimary
+  );
+
+  static TextStyle otpLabel3 = TextStyle(
+    fontWeight: FontWeight.w700,  
+    fontSize: Responsive.fontSize(15),
+    height: 1.0,
+    color: AppColors.greyText
+  );
+
+  static TextStyle otpLabel4 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: Responsive.fontSize(18),
+    height: 1.0,
+    color: AppColors.primary
+  );
+
   // labeL
   static TextStyle labelText = TextStyle(
     color: AppColors.textSecondary,

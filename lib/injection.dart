@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:product_listing_app/core/network/api_services.dart';
+import 'package:product_listing_app/core/secure_storage/secure_storage.dart';
 import 'package:product_listing_app/feature/auth/data/repositories/auth_repository_impl.dart';
 import 'package:product_listing_app/feature/auth/domain/repsoitories/auth_repository.dart';
 import 'package:product_listing_app/feature/auth/domain/usecases/register_usecase.dart';
@@ -13,7 +14,11 @@ import 'package:product_listing_app/feature/home/presentation/bloc/product/produ
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  //ApiService
+
+  /// Register SecureStorage in your init() function before any repository that depends on it.
+  sl.registerLazySingleton<SecureStorage>(() => SecureStorage());
+  
+  //Register ApiService
   sl.registerLazySingleton<ApiService>(() => ApiServiceImpl());
 
   // Repository (use the registered ApiService)
@@ -21,7 +26,7 @@ Future<void> init() async {
     () => HomeRepositoryImpl(apiClient:sl()), 
   );
   sl.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(apiClient: sl()), 
+    () => AuthRepositoryImpl(apiClient: sl(),secureStorage: sl()), 
   );
 
   // UseCase

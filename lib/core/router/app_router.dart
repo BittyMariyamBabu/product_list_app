@@ -16,32 +16,43 @@ import 'package:product_listing_app/injection.dart';
 final GoRouter router = GoRouter(
   initialLocation: AppRoutes.splash,
   routes: [
-    routeMethod(path: AppRoutes.splash, 
+    routeMethod(
+      name: RouteName.splash,
+      path: AppRoutes.splash, 
       screen: BlocProvider(
         create: (_) => SplashBloc(),
         child: const SplashScreen()
       ),
     ),
-    routeMethod(path: AppRoutes.login,
+    routeMethod(
+      name: RouteName.login,
+      path: AppRoutes.login,
       screen: BlocProvider<AuthBloc>(
         create: (_) => sl<AuthBloc>(),
         child: LoginScreen()
       )
     ),
-    routeMethod(path: AppRoutes.otp,screen: OtpScreen()),
     routeMethod(
+      name: RouteName.otp,
+      path: AppRoutes.otp,
+      screen: OtpScreen()
+    ),
+    routeMethod(
+      name: RouteName.fullname,
       path: AppRoutes.fullname,
       screen: BlocProvider<AuthBloc>(
         create: (_) => sl<AuthBloc>(),
         child: NameScreen()
       )
     ),
-    routeMethod(path: AppRoutes.main,
-    screen: MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => BottomNavBloc()),
-        BlocProvider(create: (_) => sl<ProductBloc>()), 
-      ], 
+    routeMethod(
+      name: RouteName.main,
+      path: AppRoutes.main,
+      screen: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => BottomNavBloc()),
+          BlocProvider(create: (_) => sl<ProductBloc>()), 
+        ], 
       child: MainScreen(),
     ),
     ),
@@ -49,8 +60,9 @@ final GoRouter router = GoRouter(
   ],
 );
 
-GoRoute routeMethod({required String path,required Widget screen}) {
+GoRoute routeMethod({required String name,required String path,required Widget screen}) {
   return GoRoute(
+    name: name,
     path: path,
     builder: (context, state) => screen,
   );

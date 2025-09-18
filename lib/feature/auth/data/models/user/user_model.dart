@@ -29,7 +29,7 @@ abstract class TokenModel with _$TokenModel {
 extension UserMapper on UserModel {
   UserEntity toEntity() => 
   UserEntity(
-    token: token.access,  // use empty string if null 
+    token: token.access,  
     id: userId, 
     message: message);
 }

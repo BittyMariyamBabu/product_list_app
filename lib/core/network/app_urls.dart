@@ -1,6 +1,6 @@
 class AppUrls {
-  static const String baseUrl = "http://skilltestflutter.zybotechlab.com/api/";
-  static const String login= 'verify/';
+  static const String baseUrl = "https://skilltestflutter.zybotechlab.com/api/";
+  static const String verify= 'verify/';
   static const String signup = 'login-register/';
   static const String productList = 'products/';
   static const String bannerList = 'banners/';

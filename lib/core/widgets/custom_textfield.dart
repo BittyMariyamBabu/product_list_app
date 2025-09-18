@@ -10,6 +10,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
   final bool isSearch;
+  final bool readOnly;
 
   const CustomTextField({
     super.key,
@@ -17,12 +18,14 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     this.keyboardType = TextInputType.text,
     this.validator,
-    this.isSearch = false
+    this.isSearch = false,
+    this.readOnly = false
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly,
       controller: controller,
       keyboardType: keyboardType,
       validator: validator,
@@ -32,11 +35,11 @@ class CustomTextField extends StatelessWidget {
         ? AppTextStyles.latoRegular14
         : AppTextStyles.labelText,
         filled: true,
-        suffixIcon: Icon(
+        suffixIcon: isSearch ? Icon(
           Icons.search, 
           color: AppColors.greyText,
           size: Responsive.fontSize(25)
-        ),
+        ) : SizedBox.shrink(),
         fillColor: AppColors.background,
         contentPadding: isSearch 
           ? EdgeInsets.all(Responsive.height(10))

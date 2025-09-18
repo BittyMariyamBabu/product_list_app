@@ -5,20 +5,20 @@ abstract class AuthEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoginRequested extends AuthEvent {
+class VerifyPhoneEvent extends AuthEvent {
   final String phone;
 
-  LoginRequested(this.phone);
+  VerifyPhoneEvent(this.phone);
 
   @override
   List<Object> get props => [phone];
 }
 
-class SignupRequested extends AuthEvent {
+class SignUpEvent extends AuthEvent {
   final String name;
   final String phone;
 
-  SignupRequested(this.name, this.phone);
+  SignUpEvent(this.name, this.phone);
 
   @override
   List<Object> get props => [name, phone];

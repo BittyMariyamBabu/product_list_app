@@ -3,9 +3,11 @@
 class VerifyUserEntity {
   final String otp;
   final bool isUser;
+  final String token;
 
   /// All fields are required and must not be null.
-  const VerifyUserEntity({
+  const VerifyUserEntity( {
     required this.otp, 
-    required this.isUser});
+    required this.isUser,
+    required this.token});
 }

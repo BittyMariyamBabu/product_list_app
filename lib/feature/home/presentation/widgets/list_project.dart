@@ -35,7 +35,7 @@ class ListProjects extends StatelessWidget {
                 crossAxisCount: 2,          // 2 items per row
                 mainAxisSpacing: 16,         // vertical spacing
                 crossAxisSpacing: 16,        // horizontal spacing
-                childAspectRatio: 0.7,      // width / height ratio of each card
+                childAspectRatio: 0.9,      // width / height ratio of each card
               ),
               itemBuilder: (context, index) {
                 final data = state.product[index];

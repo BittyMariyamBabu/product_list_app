@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:product_listing_app/core/router/app_routes.dart';
+import 'package:product_listing_app/feature/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:product_listing_app/feature/auth/presentation/screens/login_screen.dart';
 import 'package:product_listing_app/feature/auth/presentation/screens/name_screen.dart';
 import 'package:product_listing_app/feature/auth/presentation/screens/otp_screen.dart';
@@ -21,9 +22,20 @@ final GoRouter router = GoRouter(
         child: const SplashScreen()
       ),
     ),
-    routeMethod(path: AppRoutes.login,screen: LoginScreen()),
+    routeMethod(path: AppRoutes.login,
+      screen: BlocProvider<AuthBloc>(
+        create: (_) => sl<AuthBloc>(),
+        child: LoginScreen()
+      )
+    ),
     routeMethod(path: AppRoutes.otp,screen: OtpScreen()),
-    routeMethod(path: AppRoutes.fullname,screen: NameScreen()),
+    routeMethod(
+      path: AppRoutes.fullname,
+      screen: BlocProvider<AuthBloc>(
+        create: (_) => sl<AuthBloc>(),
+        child: NameScreen()
+      )
+    ),
     routeMethod(path: AppRoutes.main,
     screen: MultiBlocProvider(
       providers: [

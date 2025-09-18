@@ -53,26 +53,29 @@ class NameScreen extends StatelessWidget {
                     validator:(name) =>AppValidators.fullName(name),
                     hintText: AppStrings.enterName),
                   SizedBox(height: Responsive.height(20)),
-                  BlocConsumer<AuthBloc, AuthState>(
-                    listener: (context, state) {
-                      if (state is AuthSuccess) {
-                        context.pushNamed(AppRoutes.main);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Sign Up Success!')),
-                        );
-                      } else if (state is AuthFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(state.message)),
-                        );
-                      }
-                    },
-                    builder: (context, state) {
-                      return CustomButton(
-                        text: AppStrings.submit, 
-                        onPressed:() => _onSignUpPressed(context)
-                      );
-                    }
-                  ),
+                  CustomButton(
+                        text: AppStrings.continueText, 
+                        onPressed:() => context.go(AppRoutes.main)),
+                  // BlocConsumer<AuthBloc, AuthState>(
+                  //   listener: (context, state) {
+                  //     if (state is AuthSuccess) {
+                  //       context.pushNamed(AppRoutes.main);
+                  //       ScaffoldMessenger.of(context).showSnackBar(
+                  //         const SnackBar(content: Text('Sign Up Success!')),
+                  //       );
+                  //     } else if (state is AuthFailure) {
+                  //       ScaffoldMessenger.of(context).showSnackBar(
+                  //         SnackBar(content: Text(state.message)),
+                  //       );
+                  //     }
+                  //   },
+                  //   builder: (context, state) {
+                  //     return CustomButton(
+                  //       text: AppStrings.submit, 
+                  //       onPressed:() => _onSignUpPressed(context)
+                  //     );
+                  //   }
+                  // ),
                   SizedBox(height: Responsive.height(20)),
                 ],),
             ),

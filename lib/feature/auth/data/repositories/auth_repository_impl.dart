@@ -7,7 +7,7 @@ import 'package:product_listing_app/feature/auth/domain/repsoitories/auth_reposi
 class AuthRepositoryImpl extends AuthRepository{
   final ApiService apiClient;
 
-  AuthRepositoryImpl(this.apiClient);
+  AuthRepositoryImpl({required this.apiClient});
 
   @override
   Future<UserEntity> sendOtp({required String phone}) async {

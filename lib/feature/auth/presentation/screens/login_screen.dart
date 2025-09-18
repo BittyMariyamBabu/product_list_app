@@ -63,26 +63,29 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: Responsive.height(20)),
-                  BlocConsumer<AuthBloc, AuthState>(
-                    listener: (context, state) {
-                      if (state is AuthSuccess) {
-                        context.pushNamed(AppRoutes.otp);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Login Success!')),
-                        );
-                      } else if (state is AuthFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(state.message)),
-                        );
-                      }
-                    },
-                    builder: (context, state) {
-                      return CustomButton(
-                        isLoading: state is AuthLoading,
+                  CustomButton(
                         text: AppStrings.continueText, 
-                        onPressed:() => _onLoginPressed(context));
-                    }
-                  ),
+                        onPressed:() => context.go(AppRoutes.otp)),
+                  // BlocConsumer<AuthBloc, AuthState>(
+                  //   listener: (context, state) {
+                  //     if (state is AuthSuccess) {
+                  //       context.pushNamed(AppRoutes.otp);
+                  //       ScaffoldMessenger.of(context).showSnackBar(
+                  //         const SnackBar(content: Text('Login Success!')),
+                  //       );
+                  //     } else if (state is AuthFailure) {
+                  //       ScaffoldMessenger.of(context).showSnackBar(
+                  //         SnackBar(content: Text(state.message)),
+                  //       );
+                  //     }
+                  //   },
+                  //   builder: (context, state) {
+                  //     return CustomButton(
+                  //       isLoading: state is AuthLoading,
+                  //       text: AppStrings.continueText, 
+                  //       onPressed:() => _onLoginPressed(context));
+                  //   }
+                  // ),
                   SizedBox(height: Responsive.height(20)),
                   const AuthBottomText()
                 ],),

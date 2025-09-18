@@ -1,7 +1,8 @@
-import 'package:product_listing_app/feature/home/domain/entities/product_entity.dart';
+import 'package:product_listing_app/feature/wishlist/domain/entities/wishlist_entity.dart';
 
-abstract class WishlistRepository {
-  Future<ProductEntity> getWishList();
-  Future<void> addProduct(ProductEntity item);
-  Future<void> removeProduct(String id);
+abstract class WishListRepository {
+  
+  Future<WishListEntity> getWishList();
+  Future<void> addProduct({required WishListEntity item});
+  Future<void> removeProduct({required String id});
 }

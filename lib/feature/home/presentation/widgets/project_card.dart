@@ -29,9 +29,14 @@ class ProjectCard extends StatelessWidget {
         Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(Responsive.radius(8)),
-              child: CachedNetworkImage(
-                imageUrl: imageUrl),
+              borderRadius: BorderRadius.circular(Responsive.radius(10)),
+              child: SizedBox(
+                width: double.infinity,
+                height: Responsive.height(150),
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  imageUrl: imageUrl),
+              ),
             ),
             Positioned(
               top: 8.h,             

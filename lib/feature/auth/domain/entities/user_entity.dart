@@ -3,9 +3,11 @@
 class UserEntity {
   final String id;
   final String token;
+  final String message;
 
   /// All fields are required and must not be null.
   const UserEntity({
     required this.id, 
-    required this.token});
+    required this.token,
+    required this.message});
 }

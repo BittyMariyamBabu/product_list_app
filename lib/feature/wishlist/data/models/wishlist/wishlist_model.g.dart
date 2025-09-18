@@ -8,20 +8,22 @@ part of 'wishlist_model.dart';
 
 _WishListModel _$WishListModelFromJson(Map<String, dynamic> json) =>
     _WishListModel(
-      id: (json['id'] as num).toInt(),
-      salePrice: (json['salePrice'] as num).toInt(),
-      actualPrice: (json['actualPrice'] as num).toInt(),
-      imageUrl: json['imageUrl'] as String,
-      productName: json['productName'] as String,
-      review: (json['review'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt() ?? 0,
+      salePrice: (json['sale_price'] as num?)?.toInt() ?? 0,
+      mrp: (json['mrp'] as num?)?.toInt() ?? 0,
+      imageUrl: json['featured_image'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      review: (json['avg_rating'] as num?)?.toInt() ?? 0,
+      wishlist: json['in_wishlist'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$WishListModelToJson(_WishListModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'salePrice': instance.salePrice,
-      'actualPrice': instance.actualPrice,
-      'imageUrl': instance.imageUrl,
-      'productName': instance.productName,
-      'review': instance.review,
+      'sale_price': instance.salePrice,
+      'mrp': instance.mrp,
+      'featured_image': instance.imageUrl,
+      'name': instance.name,
+      'avg_rating': instance.review,
+      'in_wishlist': instance.wishlist,
     };

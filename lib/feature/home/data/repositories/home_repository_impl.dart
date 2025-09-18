@@ -29,4 +29,18 @@ class HomeRepositoryImpl implements HomeRepository {
       .toList();
     return products;
   }
+
+  @override
+  Future<List<ProductEntity>> searchProduct({required String query}) async{
+    final data = await apiClient.get(
+      endpoint: AppUrls.search,
+      queryParameters: {
+        "query": query
+        }
+    );
+    final products = (data as List)
+      .map((e) => ProductModel.fromJson(e).toEntity())
+      .toList();
+    return products;
+  }
 }

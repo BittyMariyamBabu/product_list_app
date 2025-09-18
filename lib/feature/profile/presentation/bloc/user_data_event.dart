@@ -5,9 +5,8 @@ abstract class UserEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UserDataEvent extends UserEvent {
-  @override
-  List<Object> get props => [];
-}
+class UserDataEvent extends UserEvent { }
+
+
 
 

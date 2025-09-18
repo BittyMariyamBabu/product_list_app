@@ -15,6 +15,6 @@ class WishListEntity {
     required this.actualPrice, 
     required this.imageUrl, 
     required this.productName, 
-    required this.review
+    required this.review, 
   });
 }

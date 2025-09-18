@@ -6,12 +6,13 @@ part 'wishlist_model.g.dart';
 @freezed
 abstract class WishListModel with _$WishListModel {
   factory WishListModel({
-    required int id,
-    required int salePrice,
-    required int actualPrice,
-    required String imageUrl,
-    required String productName,
-    required int review
+    @Default(0) int id,
+    @JsonKey(name: 'sale_price') @Default(0) int salePrice,
+    @Default(0) int mrp,
+    @JsonKey(name: 'featured_image') @Default('') String imageUrl,
+    @Default('') String name,
+    @JsonKey(name: 'avg_rating') @Default(0) int review,
+    @JsonKey(name: 'in_wishlist') @Default(false) bool wishlist
   }) = _WishListModel;
 
   factory WishListModel.fromJson(Map<String, dynamic> json) => _$WishListModelFromJson(json);
@@ -21,9 +22,9 @@ extension WishListMapper on WishListModel {
   WishListEntity toEntity() => WishListEntity(
     id: id, 
     salePrice: salePrice, 
-    actualPrice: actualPrice, 
+    actualPrice: mrp, 
     imageUrl: imageUrl, 
-    productName: productName,
+    productName: name,
     review: review);
 }
 

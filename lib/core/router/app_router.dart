@@ -12,6 +12,7 @@ import 'package:product_listing_app/feature/home/presentation/bloc/product/produ
 import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_bloc.dart';
 import 'package:product_listing_app/feature/splash/presentation/bloc/splash_bloc.dart';
 import 'package:product_listing_app/feature/splash/presentation/screens/splash_screen.dart';
+import 'package:product_listing_app/feature/wishlist/presentation/bloc/wishlist_bloc.dart';
 import 'package:product_listing_app/injection.dart';
 
 class AppRouter {
@@ -58,13 +59,13 @@ class AppRouter {
         screen: MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => BottomNavBloc()),
-            BlocProvider(create: (_) => sl<ProductBloc>()), 
+            BlocProvider(create: (_) => sl<ProductBloc>()),
+            BlocProvider(create: (_) => sl<WishlistBloc>()),  
             BlocProvider(create: (_) => sl<UserDataBloc>()), 
           ], 
         child: MainScreen(),
       ),
       ),
-    // routeMethod(path: AppRoutes.home,screen: HomeScreen()),
     ],
   );
 

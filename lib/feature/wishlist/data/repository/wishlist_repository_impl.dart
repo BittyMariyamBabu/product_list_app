@@ -4,29 +4,43 @@ import 'package:product_listing_app/feature/wishlist/data/models/wishlist/wishli
 import 'package:product_listing_app/feature/wishlist/domain/entities/wishlist_entity.dart';
 import 'package:product_listing_app/feature/wishlist/domain/repositories/wishlist_repository.dart';
 
-// class WishlistRepositoryImpl extends WishListRepository{
-//   final ApiService apiClient;
+class WishlistRepositoryImpl extends WishListRepository{
+  final ApiService apiClient;
 
-//   WishlistRepositoryImpl({required this.apiClient})
+  WishlistRepositoryImpl({required this.apiClient});
 
-//   @override
-//   Future<WishListEntity> getWishList() async {
-//     final response = await apiClient.get(AppUrls.wishList);
-//     final model = WishListModel.fromJson(response.data);
-//     return model.toEntity();
-//   }
+  // Local cache
+  final List<String> _localWishlist = [];
 
-//   @override
-//   Future<WishListEntity> addProduct({required WishListEntity item}) async {
-//     final response = await apiClient.get(AppUrls.wishList);
-//     final model = WishListModel.fromJson(response.data);
-//     return model.toEntity();
-//   }
+  @override
+  Future<List<WishListEntity>> getWishList() async {
+    final response = await apiClient.get(endpoint: AppUrls.wishList);
+    final wishlist  = (response as List)
+      .map((e) => WishListModel.fromJson(e).toEntity())
+      .toList();
+    // Keep cache updated
+    _localWishlist.clear();
+    _localWishlist.addAll(wishlist.map((e) => e.id.toString()));
+    return wishlist;
+  }
 
-//   @override
-//   Future<WishListEntity> removeProduct({required String id}) async {
-//     final response = await apiClient.get(AppUrls.wishList);
-//     final model = WishListModel.fromJson(response.data);
-//     return model.toEntity();
-//   }
-// }
+  @override
+  Future<void> toggleProduct({required String productId}) async {
+    if (_localWishlist.contains(productId)) {
+      _localWishlist.remove(productId);
+    } else {
+      _localWishlist.add(productId);
+    }
+  }
+
+  @override
+  Future<void> syncWishlist() async {
+    // Send local wishlist to backend 
+    for (final id in _localWishlist) {
+      await apiClient.post(
+        endpoint: AppUrls.addRemoveWishList,
+        body: {"product_id": id}, // sends each as product_id"
+      );
+    }
+  }
+}

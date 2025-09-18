@@ -2,7 +2,9 @@ import 'package:product_listing_app/feature/wishlist/domain/entities/wishlist_en
 
 abstract class WishListRepository {
   
-  Future<WishListEntity> getWishList();
-  Future<void> addProduct({required WishListEntity item});
-  Future<void> removeProduct({required String id});
+  Future<List<WishListEntity>> getWishList();
+  Future<void> toggleProduct({required String productId});
+  Future<void> syncWishlist(); // batch sync to API
+  // Future<void> addProduct({required WishListEntity item});
+  // Future<void> removeProduct({required String id});
 }

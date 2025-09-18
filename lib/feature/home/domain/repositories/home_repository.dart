@@ -2,8 +2,10 @@ import 'package:product_listing_app/feature/home/domain/entities/banner_entity.d
 import 'package:product_listing_app/feature/home/domain/entities/product_entity.dart';
 
 abstract class HomeRepository {
-  // Banner repository
+  // Get Banner List
   Future<List<BannerEntity>> getBanners();
-  // Product repository
+  // Get Product list
   Future<List<ProductEntity>> getProduct();
+  // search product with product name
+  Future<List<ProductEntity>> searchProduct({required String query});
 }

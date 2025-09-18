@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$WishListModel {
 
- int get id; int get salePrice; int get actualPrice; String get imageUrl; String get productName; int get review;
+ int get id;@JsonKey(name: 'sale_price') int get salePrice; int get mrp;@JsonKey(name: 'featured_image') String get imageUrl; String get name;@JsonKey(name: 'avg_rating') int get review;@JsonKey(name: 'in_wishlist') bool get wishlist;
 /// Create a copy of WishListModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $WishListModelCopyWith<WishListModel> get copyWith => _$WishListModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is WishListModel&&(identical(other.id, id) || other.id == id)&&(identical(other.salePrice, salePrice) || other.salePrice == salePrice)&&(identical(other.actualPrice, actualPrice) || other.actualPrice == actualPrice)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.productName, productName) || other.productName == productName)&&(identical(other.review, review) || other.review == review));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is WishListModel&&(identical(other.id, id) || other.id == id)&&(identical(other.salePrice, salePrice) || other.salePrice == salePrice)&&(identical(other.mrp, mrp) || other.mrp == mrp)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.name, name) || other.name == name)&&(identical(other.review, review) || other.review == review)&&(identical(other.wishlist, wishlist) || other.wishlist == wishlist));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,salePrice,actualPrice,imageUrl,productName,review);
+int get hashCode => Object.hash(runtimeType,id,salePrice,mrp,imageUrl,name,review,wishlist);
 
 @override
 String toString() {
-  return 'WishListModel(id: $id, salePrice: $salePrice, actualPrice: $actualPrice, imageUrl: $imageUrl, productName: $productName, review: $review)';
+  return 'WishListModel(id: $id, salePrice: $salePrice, mrp: $mrp, imageUrl: $imageUrl, name: $name, review: $review, wishlist: $wishlist)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $WishListModelCopyWith<$Res>  {
   factory $WishListModelCopyWith(WishListModel value, $Res Function(WishListModel) _then) = _$WishListModelCopyWithImpl;
 @useResult
 $Res call({
- int id, int salePrice, int actualPrice, String imageUrl, String productName, int review
+ int id,@JsonKey(name: 'sale_price') int salePrice, int mrp,@JsonKey(name: 'featured_image') String imageUrl, String name,@JsonKey(name: 'avg_rating') int review,@JsonKey(name: 'in_wishlist') bool wishlist
 });
 
 
@@ -65,15 +65,16 @@ class _$WishListModelCopyWithImpl<$Res>
 
 /// Create a copy of WishListModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? salePrice = null,Object? actualPrice = null,Object? imageUrl = null,Object? productName = null,Object? review = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? salePrice = null,Object? mrp = null,Object? imageUrl = null,Object? name = null,Object? review = null,Object? wishlist = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,salePrice: null == salePrice ? _self.salePrice : salePrice // ignore: cast_nullable_to_non_nullable
-as int,actualPrice: null == actualPrice ? _self.actualPrice : actualPrice // ignore: cast_nullable_to_non_nullable
+as int,mrp: null == mrp ? _self.mrp : mrp // ignore: cast_nullable_to_non_nullable
 as int,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,productName: null == productName ? _self.productName : productName // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,review: null == review ? _self.review : review // ignore: cast_nullable_to_non_nullable
-as int,
+as int,wishlist: null == wishlist ? _self.wishlist : wishlist // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -158,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int salePrice,  int actualPrice,  String imageUrl,  String productName,  int review)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'sale_price')  int salePrice,  int mrp, @JsonKey(name: 'featured_image')  String imageUrl,  String name, @JsonKey(name: 'avg_rating')  int review, @JsonKey(name: 'in_wishlist')  bool wishlist)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WishListModel() when $default != null:
-return $default(_that.id,_that.salePrice,_that.actualPrice,_that.imageUrl,_that.productName,_that.review);case _:
+return $default(_that.id,_that.salePrice,_that.mrp,_that.imageUrl,_that.name,_that.review,_that.wishlist);case _:
   return orElse();
 
 }
@@ -179,10 +180,10 @@ return $default(_that.id,_that.salePrice,_that.actualPrice,_that.imageUrl,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int salePrice,  int actualPrice,  String imageUrl,  String productName,  int review)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id, @JsonKey(name: 'sale_price')  int salePrice,  int mrp, @JsonKey(name: 'featured_image')  String imageUrl,  String name, @JsonKey(name: 'avg_rating')  int review, @JsonKey(name: 'in_wishlist')  bool wishlist)  $default,) {final _that = this;
 switch (_that) {
 case _WishListModel():
-return $default(_that.id,_that.salePrice,_that.actualPrice,_that.imageUrl,_that.productName,_that.review);case _:
+return $default(_that.id,_that.salePrice,_that.mrp,_that.imageUrl,_that.name,_that.review,_that.wishlist);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +200,10 @@ return $default(_that.id,_that.salePrice,_that.actualPrice,_that.imageUrl,_that.
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int salePrice,  int actualPrice,  String imageUrl,  String productName,  int review)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id, @JsonKey(name: 'sale_price')  int salePrice,  int mrp, @JsonKey(name: 'featured_image')  String imageUrl,  String name, @JsonKey(name: 'avg_rating')  int review, @JsonKey(name: 'in_wishlist')  bool wishlist)?  $default,) {final _that = this;
 switch (_that) {
 case _WishListModel() when $default != null:
-return $default(_that.id,_that.salePrice,_that.actualPrice,_that.imageUrl,_that.productName,_that.review);case _:
+return $default(_that.id,_that.salePrice,_that.mrp,_that.imageUrl,_that.name,_that.review,_that.wishlist);case _:
   return null;
 
 }
@@ -214,15 +215,16 @@ return $default(_that.id,_that.salePrice,_that.actualPrice,_that.imageUrl,_that.
 @JsonSerializable()
 
 class _WishListModel implements WishListModel {
-   _WishListModel({required this.id, required this.salePrice, required this.actualPrice, required this.imageUrl, required this.productName, required this.review});
+   _WishListModel({this.id = 0, @JsonKey(name: 'sale_price') this.salePrice = 0, this.mrp = 0, @JsonKey(name: 'featured_image') this.imageUrl = '', this.name = '', @JsonKey(name: 'avg_rating') this.review = 0, @JsonKey(name: 'in_wishlist') this.wishlist = false});
   factory _WishListModel.fromJson(Map<String, dynamic> json) => _$WishListModelFromJson(json);
 
-@override final  int id;
-@override final  int salePrice;
-@override final  int actualPrice;
-@override final  String imageUrl;
-@override final  String productName;
-@override final  int review;
+@override@JsonKey() final  int id;
+@override@JsonKey(name: 'sale_price') final  int salePrice;
+@override@JsonKey() final  int mrp;
+@override@JsonKey(name: 'featured_image') final  String imageUrl;
+@override@JsonKey() final  String name;
+@override@JsonKey(name: 'avg_rating') final  int review;
+@override@JsonKey(name: 'in_wishlist') final  bool wishlist;
 
 /// Create a copy of WishListModel
 /// with the given fields replaced by the non-null parameter values.
@@ -237,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WishListModel&&(identical(other.id, id) || other.id == id)&&(identical(other.salePrice, salePrice) || other.salePrice == salePrice)&&(identical(other.actualPrice, actualPrice) || other.actualPrice == actualPrice)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.productName, productName) || other.productName == productName)&&(identical(other.review, review) || other.review == review));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _WishListModel&&(identical(other.id, id) || other.id == id)&&(identical(other.salePrice, salePrice) || other.salePrice == salePrice)&&(identical(other.mrp, mrp) || other.mrp == mrp)&&(identical(other.imageUrl, imageUrl) || other.imageUrl == imageUrl)&&(identical(other.name, name) || other.name == name)&&(identical(other.review, review) || other.review == review)&&(identical(other.wishlist, wishlist) || other.wishlist == wishlist));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,salePrice,actualPrice,imageUrl,productName,review);
+int get hashCode => Object.hash(runtimeType,id,salePrice,mrp,imageUrl,name,review,wishlist);
 
 @override
 String toString() {
-  return 'WishListModel(id: $id, salePrice: $salePrice, actualPrice: $actualPrice, imageUrl: $imageUrl, productName: $productName, review: $review)';
+  return 'WishListModel(id: $id, salePrice: $salePrice, mrp: $mrp, imageUrl: $imageUrl, name: $name, review: $review, wishlist: $wishlist)';
 }
 
 
@@ -257,7 +259,7 @@ abstract mixin class _$WishListModelCopyWith<$Res> implements $WishListModelCopy
   factory _$WishListModelCopyWith(_WishListModel value, $Res Function(_WishListModel) _then) = __$WishListModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int salePrice, int actualPrice, String imageUrl, String productName, int review
+ int id,@JsonKey(name: 'sale_price') int salePrice, int mrp,@JsonKey(name: 'featured_image') String imageUrl, String name,@JsonKey(name: 'avg_rating') int review,@JsonKey(name: 'in_wishlist') bool wishlist
 });
 
 
@@ -274,15 +276,16 @@ class __$WishListModelCopyWithImpl<$Res>
 
 /// Create a copy of WishListModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? salePrice = null,Object? actualPrice = null,Object? imageUrl = null,Object? productName = null,Object? review = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? salePrice = null,Object? mrp = null,Object? imageUrl = null,Object? name = null,Object? review = null,Object? wishlist = null,}) {
   return _then(_WishListModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,salePrice: null == salePrice ? _self.salePrice : salePrice // ignore: cast_nullable_to_non_nullable
-as int,actualPrice: null == actualPrice ? _self.actualPrice : actualPrice // ignore: cast_nullable_to_non_nullable
+as int,mrp: null == mrp ? _self.mrp : mrp // ignore: cast_nullable_to_non_nullable
 as int,imageUrl: null == imageUrl ? _self.imageUrl : imageUrl // ignore: cast_nullable_to_non_nullable
-as String,productName: null == productName ? _self.productName : productName // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,review: null == review ? _self.review : review // ignore: cast_nullable_to_non_nullable
-as int,
+as int,wishlist: null == wishlist ? _self.wishlist : wishlist // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:product_listing_app/core/widgets/common_title.dart';
-import 'package:product_listing_app/feature/home/presentation/bloc/product/product_bloc.dart';
-import 'package:product_listing_app/feature/home/presentation/bloc/product/product_event.dart';
-import 'package:product_listing_app/feature/home/presentation/bloc/product/product_state.dart';
 import 'package:product_listing_app/feature/home/presentation/widgets/project_card.dart';
+import 'package:product_listing_app/feature/wishlist/presentation/bloc/wishlist_bloc.dart';
+import 'package:product_listing_app/feature/wishlist/presentation/bloc/wishlist_event.dart';
+import 'package:product_listing_app/feature/wishlist/presentation/bloc/wishlist_state.dart';
 
-class ListProjects extends StatelessWidget {
-  const ListProjects({super.key, required this.label});
+class WishProjects extends StatelessWidget {
+  const WishProjects({super.key, required this.label});
   final String label;
 
   @override
@@ -18,27 +18,27 @@ class ListProjects extends StatelessWidget {
       children: [
         CommonTitle(label: label),
         SizedBox(height: Responsive.height(15)),
-        BlocBuilder<ProductBloc, ProductState>(
+        BlocBuilder<WishlistBloc, WishlistState>(
         builder: (context, state) {
-          if (state is ProductInitial) {
-            context.read<ProductBloc>().add(LoadProduct());
+          if (state is WishlistInitial) {
+            context.read<WishlistBloc>().add(LoadWishlist());
             return const Center(child: Text("Loading..."));
-          } else if (state is ProductLoading) {
+          } else if (state is WishlistLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is ProductLoaded) {
+          } else if (state is WishlistLoaded) {
             return GridView.builder(
-              shrinkWrap: true,                // tells GridView to take only needed space
+              shrinkWrap: true,                
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.zero,
-              itemCount: state.products.length,
+              itemCount: state.wishlist.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,          // 2 items per row
-                mainAxisSpacing: 16,         // vertical spacing
-                crossAxisSpacing: 16,        // horizontal spacing
-                childAspectRatio: 0.9,      // width / height ratio of each card
+                crossAxisCount: 2,         
+                mainAxisSpacing: 16,       
+                crossAxisSpacing: 16,        
+                childAspectRatio: 0.9,      
               ),
               itemBuilder: (context, index) {
-                final data = state.products[index];
+                final data = state.wishlist[index];
                 return ProjectCard(
                   imageUrl: data.imageUrl, 
                   review: data.review.toString(), 
@@ -48,7 +48,7 @@ class ListProjects extends StatelessWidget {
                 );
               },
             );
-          } else if (state is ProductError) {
+          } else if (state is WishlistError) {
             return Center(child: Text(state.message));
           }
           return const SizedBox();

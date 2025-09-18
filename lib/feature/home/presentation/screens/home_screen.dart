@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_listing_app/core/constants/app_paddings.dart';
 import 'package:product_listing_app/core/constants/app_strings.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:product_listing_app/core/widgets/custom_textfield.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/product/product_bloc.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/product/product_event.dart';
 import 'package:product_listing_app/feature/home/presentation/widgets/list_project.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,6 +23,10 @@ class HomeScreen extends StatelessWidget {
               children: [
                 SizedBox(height: Responsive.height(15)),
                 CustomTextField(
+                  onChanged: (String query) {
+                    // Trigger search event on every text change
+                    context.read<ProductBloc>().add(SearchProducts(query));
+                  },
                   isSearch: true,
                   controller: TextEditingController(), 
                   hintText: AppStrings.search),

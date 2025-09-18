@@ -7,7 +7,7 @@ class AppUrls {
   static const String userData= 'user-data/';
   static const String wishList = 'wishlist/';
   static const String addRemoveWishList = 'add-remove-wishlist/';
-  static const String search = 'search/?query=herb';
+  static const String search = 'search/';
   static const int successStatusCode = 200;
   static const int createdStatusCode = 201;
 }

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_listing_app/core/constants/app_paddings.dart';
 import 'package:product_listing_app/core/constants/app_strings.dart';
-import 'package:product_listing_app/core/constants/app_text_styles.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:product_listing_app/core/widgets/common_title.dart';
+import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_bloc.dart';
+import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_event.dart';
+import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_state.dart';
+import 'package:product_listing_app/feature/profile/presentation/widget/common_label.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -15,45 +19,33 @@ class ProfileScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: AppPadding.screenPadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: Responsive.height(10)),
-                CommonTitle(label: "My ${AppStrings.profile}"),
-                SizedBox(height: Responsive.height(25)),
-                CommonLabels(label1: AppStrings.name, label2: AppStrings.otpVerification),
-                CommonLabels(label1: AppStrings.phone, label2: AppStrings.otpVerification),
-              ],
-            ),
+            child: BlocBuilder<UserDataBloc, UserState>(
+        builder: (context, state) {
+                if (state is UserInitial) {
+                  context.read<UserDataBloc>().add(UserDataEvent());
+                  return const Center(child: Text("Loading..."));
+                } else if (state is UserLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is UserSuccess) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: Responsive.height(10)),
+                      CommonTitle(label: "My ${AppStrings.profile}"),
+                      SizedBox(height: Responsive.height(25)),
+                      CommonLabels(label1: AppStrings.name, label2: state.user.name),
+                      CommonLabels(label1: AppStrings.phone, label2: state.user.phone),
+                    ],
+                  );
+                }
+                // Always return a widget if no state matches
+                return const SizedBox.shrink();
+            },
           ),
         ),
       ),
-    );
+    )
+  );
   }
 }
 
-class CommonLabels extends StatelessWidget {
-  const CommonLabels({
-    super.key, required this.label1, required this.label2,
-  });
-
-  final String label1;
-  final String label2;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label1,
-          style: AppTextStyles.profileLabel),      
-        SizedBox(height: Responsive.height(17)),
-        Text(
-          label2,
-          style: AppTextStyles.profileLabel2),
-        SizedBox(height: Responsive.height(20)),
-      ],
-    );
-  }
-}

@@ -10,6 +10,10 @@ import 'package:product_listing_app/feature/home/data/repositories/home_reposito
 import 'package:product_listing_app/feature/home/domain/repositories/home_repository.dart';
 import 'package:product_listing_app/feature/home/domain/usecases/get_product_usecases.dart';
 import 'package:product_listing_app/feature/home/presentation/bloc/product/product_bloc.dart';
+import 'package:product_listing_app/feature/profile/data/repositories/user_data_repository_impl.dart';
+import 'package:product_listing_app/feature/profile/domain/repositories/user_data_repository.dart';
+import 'package:product_listing_app/feature/profile/domain/usecases/get_user_data.dart';
+import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -18,23 +22,29 @@ Future<void> init() async {
   /// Register SecureStorage in your init() function before any repository that depends on it.
   sl.registerLazySingleton<SecureStorage>(() => SecureStorage());
   
-  //Register ApiService
-  sl.registerLazySingleton<ApiService>(() => ApiServiceImpl());
+  //------------------------------------Register ApiService--------------------------------------//
+  sl.registerLazySingleton<ApiService>(() => ApiServiceImpl(sl()));
 
-  // Repository (use the registered ApiService)
-  sl.registerLazySingleton<HomeRepository>(
-    () => HomeRepositoryImpl(apiClient:sl()), 
-  );
+  // -----------------------------------Repository-----------------------------------------------//
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(apiClient: sl(),secureStorage: sl()), 
   );
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepositoryImpl(apiClient:sl()), 
+  );
+  
+  sl.registerLazySingleton<UserDataRepository>(
+    () => UserDataRepositoryImpl(apiClient:sl()), 
+  );
 
-  // UseCase
-  sl.registerLazySingleton(() => GetProductsUseCase(sl())); 
-  sl.registerLazySingleton(() => SendOtpUseCase(sl())); 
+  // -----------------------------------Usecase--------------------------------------------------//
   sl.registerLazySingleton(() => RegisterUseCase(sl())); 
+  sl.registerLazySingleton(() => SendOtpUseCase(sl())); 
+  sl.registerLazySingleton(() => GetProductsUseCase(sl()));
+  sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
 
-  // Bloc
-  sl.registerFactory(() => ProductBloc(sl())); 
+  // -----------------------------------Bloc----------------------------------------------------//
   sl.registerFactory(() => AuthBloc(loginUseCase:sl(),signupUseCase: sl())); 
+  sl.registerFactory(() => ProductBloc(sl())); 
+  sl.registerFactory(() => UserDataBloc(sl())); 
 }

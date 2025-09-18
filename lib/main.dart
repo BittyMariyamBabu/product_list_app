@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true, 
       builder: (context, child) {
         return MaterialApp.router(
-          routerConfig: router,
+          routerConfig: AppRouter.router,
           debugShowCheckedModeBanner: false,
           title: AppStrings.productList,
           theme: AppTheme.lightTheme,  //  Light mode

@@ -8,7 +8,6 @@ abstract class UserState extends Equatable {
 
 class UserInitial extends UserState {}
 class UserLoading extends UserState {}
-
 class UserSuccess extends UserState {
   final UserDataEntity user;
   UserSuccess(this.user);

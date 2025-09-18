@@ -6,13 +6,12 @@ import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_
 
 
 class UserDataBloc extends Bloc<UserEvent, UserState> {
-  final GetUserDataUseCase userUseCase;
-
-  UserDataBloc({required this.userUseCase}) : super(UserInitial()) {
+  final GetUserDataUseCase getUserData;
+  UserDataBloc(this.getUserData) : super(UserInitial()) {
     on<UserDataEvent>((event, emit) async {
       emit(UserLoading());
       try {
-        final user = await userUseCase();
+        final user = await getUserData();
         emit(UserSuccess(user));
         debugPrint('[UserBloc] success: $user');
       } catch (e) {

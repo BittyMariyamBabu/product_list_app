@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_listing_app/feature/auth/domain/usecases/register_usecase.dart';
 import 'package:product_listing_app/feature/auth/domain/usecases/send_otp.dart';
@@ -14,10 +15,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final user = await loginUseCase(phone: event.phone);
         emit(VerifyOtpSuccess(user));
-        print('[AuthBloc] Login success: ${user.otp}');
+        debugPrint('[AuthBloc] Login success: ${user.otp}');
       } catch (e) {
         emit(AuthFailure(e.toString()));
-        print('[AuthBloc] Login error: ${e.toString()}');
+        debugPrint('[AuthBloc] Login error: ${e.toString()}');
       }
     });
 
@@ -26,10 +27,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         final user = await signupUseCase(name: event.name,phone: event.phone);
         emit(AuthSuccess(user));
-        print('[AuthBloc] SignUp success: ${user.token}');
+        debugPrint('[AuthBloc] SignUp success: ${user.token}');
       } catch (e) {
         emit(AuthFailure(e.toString()));
-        print('[AuthBloc] SignUp error: ${e.toString()}');
+        debugPrint('[AuthBloc] SignUp error: ${e.toString()}');
       }
     });
   }

@@ -61,7 +61,7 @@ class OtpScreen extends StatelessWidget {
                 OtpFieldWidget(controller: otpController),
                 SizedBox(height: Responsive.height(20)),
                 // Optional additional OTP widget
-                OtpWidget(),
+                OtpWidget(phone: phone),
                 // Bloc Consumer for handling verification
                 BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {

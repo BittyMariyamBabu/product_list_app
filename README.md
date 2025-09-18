@@ -1,16 +1,38 @@
-# product_listing_app
+# Product Listing App
 
-A new Flutter project.
+## Description
+A Flutter app for browsing products, managing wishlist, and viewing banners with responsive UI. Built using BLoC and clean architecture, ensuring a clear separation of concerns and maintainable code.
 
-## Getting Started
+## Features
+- User authentication: Login & Register
+- Fetch and search products from API
+- Fetch banners from API
+- Fetch and manage wishlist items (add/remove)
+- Fetch user deatils from API
+- Responsive UI using flutter_screenutil
+- State management with BLoC following clean architecture
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+## Folder Structure
+- `core/` - Common utilities, constants, helpers, and shared resources.
+- `blocs/` - Business logic components
+- `models/` - Data models for API and database responses, using freezed annotations for immutability.
+- `entity/` - Pure data models for the domain layer
+- `usecase/`  – Domain layer logic; each use case represents a single operation (e.g., fetch products, add wishlist item).
+- `repository/` - API and storage
+- `screens/` - UI screens
+- `widgets/` - Reusable widgets
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Prerequisites
+- Flutter 3.35.3
+- Dart >= 3.9.2
+- Android
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Installation
+```bash
+git clone <repo-url>
+cd project_name
+flutter pub get
+flutter run
+
+

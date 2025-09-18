@@ -40,11 +40,11 @@ class ApiServiceImpl implements ApiService {
         onError: (e, handler) async {
           if (e.response?.statusCode == 401) {
           // Clear all tokens
-          await _storage.delete(key: 'auth_token');
-          //Navigate user to login screen
+          await _storage.clearTokenAndUser();
+          // Navigate user to login screen
           GoRouter.of(AppRouter.navigatorKey.currentContext!).go(RouteName.login);
           debugPrint("User logged out.");
-      }
+        }
           return handler.next(e);
         },
       ),

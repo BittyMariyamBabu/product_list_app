@@ -3,14 +3,14 @@
 class BannerEntity {
   final int id;
   final String bannerImageUrl;
-  final String bannerName;
-  final int price;
+  // final String bannerName;
+  // final int price;
 
   /// All fields are required and must not be null.
   BannerEntity({
     required this.id,
     required this.bannerImageUrl,
-    required this.bannerName,
-    required this.price
+    // required this.bannerName,
+    // required this.price
   });
 }

@@ -1,127 +1,89 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-// import '../bloc/banner_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:product_listing_app/core/constants/app_decorations.dart';
+import 'package:product_listing_app/core/theme/app_colors.dart';
+import 'package:product_listing_app/core/utils/responsive.dart';
+import 'package:product_listing_app/core/widgets/indicator.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/banner/banner_bloc.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/banner/banner_event.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/banner/banner_state.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
-// class BannerWidget extends StatefulWidget {
-//   const BannerWidget({super.key});
-//   @override
-//   State<BannerWidget> createState() => _BannerWidgetState();
-// }
+class BannerWidget extends StatefulWidget {
+  const BannerWidget({super.key});
 
-// class _BannerWidgetState extends State<BannerWidget> with SingleTickerProviderStateMixin {
-//   late PageController pageController;
-//   late AnimationController animationController;
-//   int currentPage = 0;
+  @override
+  State<BannerWidget> createState() => _BannerWidgetState();
+}
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     pageController = PageController(viewportFraction: 0.9);
-//     animationController = AnimationController(
-//       vsync: this,
-//       duration: const Duration(milliseconds: 600),
-//     );
-//     animationController.forward();
-//     Future.delayed(const Duration(seconds: 5), autoScroll);
-//   }
+class _BannerWidgetState extends State<BannerWidget> {
+  int _currentIndex = 0;
+  final CarouselSliderController _carouselController = CarouselSliderController();
 
-//   void autoScroll() {
-//     if (!mounted) return;
-//     if (pageController.hasClients) {
-//       int nextPage = (currentPage + 1) % 5;
-//       pageController.animateToPage(
-//         nextPage,
-//         duration: const Duration(milliseconds: 800),
-//         curve: Curves.easeInOut,
-//       );
-//       currentPage = nextPage;
-//       Future.delayed(const Duration(seconds: 5), autoScroll);
-//     }
-//   }
-
-//   @override
-//   void dispose() {
-//     pageController.dispose();
-//     animationController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<BannerBloc, BannerState>(
-//       builder: (context, state) {
-//         if (state is BannerLoading || state is BannerInitial) {
-//           return const SizedBox(
-//             height: 200,
-//             child: Center(child: CircularProgressIndicator()),
-//           );
-//         } else if (state is BannerLoaded) {
-//           return Column(
-//             children: [
-//               SizedBox(
-//                 height: 200,
-//                 child: PageView.builder(
-//                   controller: pageController,
-//                   itemCount: state.banners.length,
-//                   itemBuilder: (context, index) {
-//                     final banner = state.banners[index];
-//                     return GestureDetector(
-//                       onTap: () {
-//                         Navigator.push(
-//                           context,
-//                           MaterialPageRoute(
-//                             builder: (_) => BannerDetailScreen(banner: banner),
-//                           ),
-//                         );
-//                       },
-//                       child: Hero(
-//                         tag: banner.id,
-//                         child: AnimatedBuilder(
-//                           animation: animationController,
-//                           builder: (context, child) {
-//                             return Opacity(
-//                               opacity: animationController.value,
-//                               child: Transform.scale(
-//                                 scale: 0.95 + 0.05 * animationController.value,
-//                                 child: child,
-//                               ),
-//                             );
-//                           },
-//                           child: ClipRRect(
-//                             borderRadius: BorderRadius.circular(12),
-//                             child: CachedNetworkImage(
-//                               imageUrl: banner.imageUrl,
-//                               fit: BoxFit.cover,
-//                               placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-//                               errorWidget: (context, url, error) => const Icon(Icons.error),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     );
-//                   },
-//                 ),
-//               ),
-//               const SizedBox(height: 8),
-//               SmoothPageIndicator(
-//                 controller: pageController,
-//                 count: state.banners.length,
-//                 effect: ExpandingDotsEffect(
-//                   dotHeight: 8,
-//                   dotWidth: 8,
-//                   activeDotColor: Colors.blue,
-//                   dotColor: Colors.grey.shade300,
-//                 ),
-//               ),
-//             ],
-//           );
-//         } else if (state is BannerError) {
-//           return Center(child: Text(state.message));
-//         }
-//         return const SizedBox();
-//       },
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BannerBloc, BannerState>(
+      builder: (context, state) {
+        if (state is BannerInitial) {
+          context.read<BannerBloc>().add(LoadBanner());
+          return const Center(child: Text("Loading..."));
+        } else if (state is BannerLoading) {
+          return CommonIndicator();
+        } else if (state is BannerLoaded) {
+          return Column(
+            children: [
+              /// Banner Slider
+              CarouselSlider.builder(
+                carouselController: _carouselController,
+                itemCount: state.banners.length,
+                itemBuilder: (context, index, realIndex) {
+                  final banner = state.banners[index];
+                  return ClipRRect(
+                    borderRadius: AppDecorations.borderRadius10,
+                    child: CachedNetworkImage(
+                      imageUrl: banner.bannerImageUrl, 
+                      fit: BoxFit.contain,
+                      placeholder: (context, url) =>
+                          CommonIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                  );
+                },
+                options: CarouselOptions(
+                  height: 180,
+                  viewportFraction: 0.9,
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  onPageChanged: (index, reason) {
+                    setState(() => _currentIndex = index);
+                  },
+                ),
+              ),
+              SizedBox(height: Responsive.fontSize(12)),
+              /// Smooth Page Indicator
+              AnimatedSmoothIndicator(
+                activeIndex: _currentIndex,
+                count: state.banners.length,
+                effect: ExpandingDotsEffect(
+                  dotHeight: 5,
+                  dotWidth: 8,
+                  activeDotColor: AppColors.textPrimary,
+                  dotColor: AppColors.neutral,
+                ),
+                onDotClicked: (index) {
+                  _carouselController.animateToPage(index);
+                },
+              ),
+            ],
+          );
+        } else if (state is BannerError) {
+          return Center(child: Text(state.message));
+        }
+        return const SizedBox();
+      },
+    );
+  }
+}

@@ -8,13 +8,16 @@ import 'package:product_listing_app/feature/auth/domain/usecases/send_otp.dart';
 import 'package:product_listing_app/feature/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:product_listing_app/feature/home/data/repositories/home_repository_impl.dart';
 import 'package:product_listing_app/feature/home/domain/repositories/home_repository.dart';
+import 'package:product_listing_app/feature/home/domain/usecases/get_banner_usecases.dart';
 import 'package:product_listing_app/feature/home/domain/usecases/get_product_usecases.dart';
 import 'package:product_listing_app/feature/home/domain/usecases/search_product_usecases.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/banner/banner_bloc.dart';
 import 'package:product_listing_app/feature/home/presentation/bloc/product/product_bloc.dart';
 import 'package:product_listing_app/feature/profile/data/repositories/user_data_repository_impl.dart';
 import 'package:product_listing_app/feature/profile/domain/repositories/user_data_repository.dart';
 import 'package:product_listing_app/feature/profile/domain/usecases/get_user_data.dart';
 import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_bloc.dart';
+import 'package:product_listing_app/feature/splash/presentation/bloc/splash_bloc.dart';
 import 'package:product_listing_app/feature/wishlist/data/repository/wishlist_repository_impl.dart';
 import 'package:product_listing_app/feature/wishlist/domain/repositories/wishlist_repository.dart';
 import 'package:product_listing_app/feature/wishlist/domain/usecases/add_items.dart';
@@ -50,6 +53,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => RegisterUseCase(sl())); 
   sl.registerLazySingleton(() => SendOtpUseCase(sl())); 
   sl.registerLazySingleton(() => GetProductsUseCase(sl()));
+  sl.registerLazySingleton(() => GetBannersUseCase(sl()));
   sl.registerLazySingleton(() => SearchProductsUseCase(sl()));
   sl.registerLazySingleton(() => GetWishListUseCase(sl()));
   sl.registerLazySingleton(() => ToggleProductUseCase(sl()));
@@ -57,8 +61,10 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetUserDataUseCase(sl()));
 
   // -----------------------------------Bloc----------------------------------------------------//
-  sl.registerFactory(() => AuthBloc(loginUseCase:sl(),signupUseCase: sl())); 
+  sl.registerFactory(() => SplashBloc(storage: sl())); 
+  sl.registerFactory(() => AuthBloc(loginUseCase:sl(),signupUseCase: sl(), secureStorage: sl())); 
   sl.registerFactory(() => ProductBloc(getProducts: sl(), searchProducts: sl())); 
+  sl.registerFactory(() => BannerBloc(getBanners:sl())); 
   sl.registerFactory(() => UserDataBloc(sl())); 
   sl.registerFactory(() => WishlistBloc(
       getWishList: sl(),

@@ -5,6 +5,7 @@ import 'package:product_listing_app/core/constants/app_paddings.dart';
 import 'package:product_listing_app/core/constants/app_strings.dart';
 import 'package:product_listing_app/core/router/app_routes.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
+import 'package:product_listing_app/core/utils/snackbar.dart';
 import 'package:product_listing_app/core/utils/validators.dart';
 import 'package:product_listing_app/core/widgets/custom_button.dart';
 import 'package:product_listing_app/core/widgets/custom_textfield.dart';
@@ -62,13 +63,9 @@ class NameScreen extends StatelessWidget {
                     listener: (context, state) {
                       if (state is AuthSuccess) {
                         context.pushNamed(RouteName.main);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Sign Up Success!')),
-                        );
+                        showCustomSnackBar(context: context, message: 'Sign Up Success!');
                       } else if (state is AuthFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(state.message)),
-                        );
+                        showCustomSnackBar(context: context, message: state.message);
                       }
                     },
                     builder: (context, state) {

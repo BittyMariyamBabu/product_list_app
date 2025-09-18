@@ -8,6 +8,7 @@ import 'package:product_listing_app/feature/auth/presentation/screens/name_scree
 import 'package:product_listing_app/feature/auth/presentation/screens/otp_screen.dart';
 import 'package:product_listing_app/feature/bottom_bar/presentation/bloc/bottom_nav_bloc.dart';
 import 'package:product_listing_app/feature/bottom_bar/presentation/screens/bottom_screen.dart';
+import 'package:product_listing_app/feature/home/presentation/bloc/banner/banner_bloc.dart';
 import 'package:product_listing_app/feature/home/presentation/bloc/product/product_bloc.dart';
 import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_bloc.dart';
 import 'package:product_listing_app/feature/splash/presentation/bloc/splash_bloc.dart';
@@ -28,7 +29,7 @@ class AppRouter {
         name: RouteName.splash,
         path: AppRoutes.splash, 
         screen: BlocProvider(
-          create: (_) => SplashBloc(),
+          create: (_) => sl<SplashBloc>(),
           child: const SplashScreen()
         ),
       ),
@@ -43,7 +44,10 @@ class AppRouter {
       routeMethod(
         name: RouteName.otp,
         path: AppRoutes.otp,
-        screen: OtpScreen()
+        screen: BlocProvider<AuthBloc>(
+          create: (_) => sl<AuthBloc>(),
+          child: OtpScreen()
+        )
       ),
       routeMethod(
         name: RouteName.fullname,
@@ -59,6 +63,7 @@ class AppRouter {
         screen: MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => BottomNavBloc()),
+            BlocProvider(create: (_) => sl<BannerBloc>()),
             BlocProvider(create: (_) => sl<ProductBloc>()),
             BlocProvider(create: (_) => sl<WishlistBloc>()),  
             BlocProvider(create: (_) => sl<UserDataBloc>()), 

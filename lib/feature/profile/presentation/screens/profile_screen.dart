@@ -4,6 +4,7 @@ import 'package:product_listing_app/core/constants/app_paddings.dart';
 import 'package:product_listing_app/core/constants/app_strings.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:product_listing_app/core/widgets/common_title.dart';
+import 'package:product_listing_app/core/widgets/indicator.dart';
 import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_bloc.dart';
 import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_event.dart';
 import 'package:product_listing_app/feature/profile/presentation/bloc/user_data_state.dart';
@@ -20,12 +21,12 @@ class ProfileScreen extends StatelessWidget {
           child: Padding(
             padding: AppPadding.screenPadding,
             child: BlocBuilder<UserDataBloc, UserState>(
-        builder: (context, state) {
+             builder: (context, state) {
                 if (state is UserInitial) {
                   context.read<UserDataBloc>().add(UserDataEvent());
                   return const Center(child: Text("Loading..."));
                 } else if (state is UserLoading) {
-                  return const Center(child: CircularProgressIndicator());
+                  return CommonIndicator();
                 } else if (state is UserSuccess) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

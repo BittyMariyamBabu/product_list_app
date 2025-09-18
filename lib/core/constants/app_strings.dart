@@ -13,7 +13,7 @@ class AppStrings {
   static const String otpVerification ='OTP VERIFICATION';
   static const String enterOtp ='Enter the otp sent to: ';
   static const String otp ='OTP IS ';
-  static const String codeNotReceived = 'Don’t receive code ?';
+  static const String codeNotReceived = 'Don’t receive code ? ';
   static const String resend = 'Re-send';
   static const String home = 'Home';
   static const String wishlist = 'Wishlist';

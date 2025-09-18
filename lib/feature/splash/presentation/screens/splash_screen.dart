@@ -65,7 +65,11 @@ class _SplashScreenState extends State<SplashScreen>
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state.status == SplashStatus.completed) {
-          context.pushReplacement(AppRoutes.login);
+           if (state.isLoggedIn) {
+              context.pushReplacement(AppRoutes.main); // User logged in → Main
+          } else {
+            context.pushReplacement(AppRoutes.login); // Not logged in → Login
+          }
         }
       },
       child: Scaffold(

@@ -40,6 +40,7 @@ class ListProjects extends StatelessWidget {
               itemBuilder: (context, index) {
                 final data = state.products[index];
                 return ProjectCard(
+                  id: data.id,
                   imageUrl: data.imageUrl, 
                   review: data.review.toString(), 
                   actualPrice: data.actualPrice.toString(), 

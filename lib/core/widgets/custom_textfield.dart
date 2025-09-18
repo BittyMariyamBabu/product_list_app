@@ -4,6 +4,7 @@ import 'package:product_listing_app/core/constants/app_text_styles.dart';
 import 'package:product_listing_app/core/theme/app_colors.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
 
+// Common TextField throughout the app
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -12,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   final bool isSearch;
   final bool readOnly;
   final Function(String)? onChanged;
+  final Widget? prefix; 
 
   const CustomTextField({
     super.key,
@@ -21,7 +23,8 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.isSearch = false,
     this.readOnly = false,
-    this.onChanged
+    this.onChanged,
+    this.prefix
   });
 
   @override
@@ -69,8 +72,11 @@ class CustomTextField extends StatelessWidget {
           ) : SizedBox.shrink(),
           filled: !isSearch, // Already using container for white bg
           fillColor: isSearch ? Colors.transparent : AppColors.background,
+          prefix: prefix,
           contentPadding: isSearch 
-            ? EdgeInsets.all(Responsive.height(10))
+            ? EdgeInsets.symmetric(
+              horizontal: Responsive.width(8),
+              vertical: Responsive.height(10))
             : EdgeInsets.symmetric(vertical: Responsive.height(10)),
           border: AppDecorations.inputBorder,
           enabledBorder: AppDecorations.inputBorder,

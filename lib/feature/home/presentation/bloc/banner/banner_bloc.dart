@@ -6,7 +6,7 @@ import 'package:product_listing_app/feature/home/presentation/bloc/banner/banner
 class BannerBloc extends Bloc<BannerEvent, BannerState> {
   final GetBannersUseCase getBanners;
 
-  BannerBloc(this.getBanners) : super(BannerInitial()) {
+  BannerBloc({required this.getBanners}) : super(BannerInitial()) {
     on<LoadBanner>((event, emit) async {
       emit(BannerLoading());
       try {

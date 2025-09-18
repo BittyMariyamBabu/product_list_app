@@ -4,5 +4,4 @@ import 'package:product_listing_app/feature/auth/domain/entities/verify_user_ent
 abstract class AuthRepository {
   Future<VerifyUserEntity> verifyUser({required String phone});
   Future<UserEntity> register({required String phone, required String fullName});
-  Future<String?> getToken();
 }

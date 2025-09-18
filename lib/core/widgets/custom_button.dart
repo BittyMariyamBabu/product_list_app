@@ -7,22 +7,26 @@ class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final bool isLoading;
+  final bool isWishList;
 
   const CustomButton({
     super.key,
     required this.text,
     required this.onPressed,
     this.isLoading = false,
+    this.isWishList= false
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: isWishList ? Responsive.width(200) : double.infinity,
       height: Responsive.height(50),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          shape: AppDecorations.buttonBorder,
+          shape: isWishList 
+          ? AppDecorations.roundedbuttonBorder
+          : AppDecorations.buttonBorder,
         ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading

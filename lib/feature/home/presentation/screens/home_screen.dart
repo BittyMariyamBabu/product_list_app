@@ -6,6 +6,7 @@ import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:product_listing_app/core/widgets/custom_textfield.dart';
 import 'package:product_listing_app/feature/home/presentation/bloc/product/product_bloc.dart';
 import 'package:product_listing_app/feature/home/presentation/bloc/product/product_event.dart';
+import 'package:product_listing_app/feature/home/presentation/widgets/banner.dart';
 import 'package:product_listing_app/feature/home/presentation/widgets/list_project.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -31,6 +32,10 @@ class HomeScreen extends StatelessWidget {
                   controller: TextEditingController(), 
                   hintText: AppStrings.search),
                 SizedBox(height: Responsive.height(10)),
+                // Banner 
+                const BannerWidget(),
+                SizedBox(height: Responsive.height(10)),
+                // Latest & Popular Product
                 const ListProjects(label: AppStrings.popularProduct),
                 const ListProjects(label: AppStrings.latestProduct),
               ],

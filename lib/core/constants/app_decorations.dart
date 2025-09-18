@@ -20,6 +20,14 @@ class AppDecorations {
     borderRadius: borderRadius45
   );
 
+  static final OutlineInputBorder pinBorder = OutlineInputBorder(
+    borderSide: BorderSide(color: AppColors.background),
+    borderRadius: borderRadius45
+  );
+
   static final RoundedRectangleBorder buttonBorder = RoundedRectangleBorder(
+     borderRadius: borderRadius10);
+  
+  static final RoundedRectangleBorder roundedbuttonBorder = RoundedRectangleBorder(
      borderRadius: borderRadius10);
 }

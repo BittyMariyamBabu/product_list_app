@@ -23,7 +23,9 @@ class AuthRepositoryImpl extends AuthRepository{
       }
     );
     final verifyUser = VerifyUserModel.fromJson(response);
-    await secureStorage.write(key: 'auth_token', value: verifyUser.token.access);
+    await secureStorage.saveTokenAndUser(
+      token: verifyUser.token.access, 
+      isUser: verifyUser.user);
     return verifyUser.toEntity();
   }
   
@@ -38,13 +40,10 @@ class AuthRepositoryImpl extends AuthRepository{
       }
     );
     final userModel = UserModel.fromJson(response);
-    await secureStorage.write(key: 'auth_token', value: userModel.token.access);
+    await secureStorage.saveTokenAndUser(
+      token: userModel.token.access, 
+      isUser: true);
     return userModel.toEntity();
   }
 
-  /// Get token from storage
-  @override
-  Future<String?> getToken() async{
-    return await secureStorage.read(key: 'auth_token');
-  }
 }

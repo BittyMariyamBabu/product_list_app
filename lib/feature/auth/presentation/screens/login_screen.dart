@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:product_listing_app/core/constants/app_paddings.dart';
 import 'package:product_listing_app/core/constants/app_strings.dart';
+import 'package:product_listing_app/core/constants/app_text_styles.dart';
 import 'package:product_listing_app/core/router/app_routes.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
+import 'package:product_listing_app/core/utils/snackbar.dart';
 import 'package:product_listing_app/core/utils/validators.dart';
 import 'package:product_listing_app/core/widgets/custom_button.dart';
 import 'package:product_listing_app/core/widgets/custom_textfield.dart';
@@ -43,43 +45,26 @@ class LoginScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const TopWidget(),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: CustomTextField(
-                          readOnly: true,
-                          controller: TextEditingController(), 
-                          hintText: "+91"),
-                      ),
-                      SizedBox(width: Responsive.width(10)),
-                      Expanded(
-                        flex: 6,
-                        child: CustomTextField(
-                          keyboardType: TextInputType.phone,
-                          controller: phoneController, 
-                          validator:(phone) => AppValidators.phone(phone),
-                          hintText: AppStrings.enterPhone),
-                      ),
-                    ],
-                  ),
+                  CustomTextField(
+                    prefix: Text(
+                      "+91 ",
+                      style: AppTextStyles.labelText),
+                    keyboardType: TextInputType.phone,
+                    controller: phoneController, 
+                    validator:(phone) => AppValidators.phone(phone),
+                    hintText: AppStrings.enterPhone),
                   SizedBox(height: Responsive.height(20)),
                   BlocConsumer<AuthBloc, AuthState>(
                     listener: (context, state) {
-                      if (state is VerifyOtpSuccess) {
+                      if (state is VerifyPhoneSuccess) {
                         context.pushNamed(
                           RouteName.otp,
                           extra: {
                             'phone': phoneController.text.trim(),
                             'otp': state.otp.otp, //extract the String from your entity
                           });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Login Success!')),
-                        );
                       } else if (state is AuthFailure) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(state.message)),
-                        );
+                        showCustomSnackBar(context: context, message: state.message);
                       }
                     },
                     builder: (context, state) {

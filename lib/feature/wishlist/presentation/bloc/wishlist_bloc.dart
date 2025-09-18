@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_listing_app/feature/wishlist/domain/entities/wishlist_entity.dart';
 import 'package:product_listing_app/feature/wishlist/domain/usecases/add_items.dart';
@@ -18,50 +19,50 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
   }) : super(WishlistInitial()) {
     on<LoadWishlist>((event, emit) async {
       emit(WishlistLoading());
+      debugPrint("WishList loading");
       try {
         final wishlist = await getWishList();
         emit(WishlistLoaded(wishlist));
+        debugPrint("WishList laoded");
       } catch (e) {
         emit(WishlistError(e.toString()));
       }
     });
 
+    /// Toggle product in wishlist
     on<ToggleWishlist>((event, emit) async {
       if (state is WishlistLoaded) {
-        await toggleProduct(event.productId);
+        final currentState = state as WishlistLoaded;
 
-        // Current list
-        final current = (state as WishlistLoaded).wishlist;
-        final updated = List<WishListEntity>.from(current);
+        // Optimistic update: update local list first
+        List<WishListEntity> updatedWishlist = List.from(currentState.wishlist);
 
-        // Find if product already in wishlist
-        final index = updated.indexWhere((item) => item.id == event.productId);
-
-        if (index >= 0) {
-          // Remove product
-          updated.removeAt(index);
+        if (updatedWishlist.any((p) => p.id == event.product.id)) {
+          updatedWishlist.removeWhere((p) => p.id == event.product.id);
+          debugPrint("Removing from wishlist: ${event.product.id}");
         } else {
-          // Add a minimal entity (fallback values for missing fields)
-          updated.add(
-            WishListEntity(
-              id: int.parse(event.productId),       
-              salePrice: 0,
-              actualPrice: 0,
-              imageUrl: '',
-              productName: '',
-              review: 0,
-            ),
-          );
+          updatedWishlist.add(event.product);
+          debugPrint("Adding to wishlist: ${event.product.id}");
         }
 
-        emit(WishlistLoaded(updated));
+        // Emit updated state immediately
+        emit(WishlistLoaded(updatedWishlist));
+
+        try {
+          // Update repository cache and backend
+          await toggleProduct(event.product.id.toString());
+          await syncWishlist();
+        } catch (e) {
+          // Revert changes if API fails
+          emit(currentState);
+        }
       }
     });
-
 
     on<SyncWishlist>((event, emit) async {
       try {
         await syncWishlist();
+        debugPrint("Wishlist synced successfully");
       } catch (e) {
         emit(WishlistError(e.toString()));
       }

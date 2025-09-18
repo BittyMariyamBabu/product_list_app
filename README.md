@@ -18,7 +18,7 @@ A Flutter app for browsing products, managing wishlist, and viewing banners with
 - `blocs/` - Business logic components
 - `models/` - Data models for API and database responses, using freezed annotations for immutability.
 - `entity/` - Pure data models for the domain layer
-- `usecase/`  – Domain layer logic; each use case represents a single operation (e.g., fetch products, add wishlist item).
+- `usecase/`  – Domain layer logic; each use case represents a single operation 
 - `repository/` - API and storage
 - `screens/` - UI screens
 - `widgets/` - Reusable widgets

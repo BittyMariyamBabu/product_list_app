@@ -16,7 +16,7 @@ class BackArrowWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(Responsive.radius(7))
       ),
       child: Padding(
-        padding: AppPadding.smallPadding,
+        padding: AppPadding.mediumPadding,
         child: InkWell(
           onTap: onTap,
           child: Icon(

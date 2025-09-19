@@ -5,6 +5,7 @@ import 'package:product_listing_app/core/constants/app_paddings.dart';
 import 'package:product_listing_app/core/constants/app_strings.dart';
 import 'package:product_listing_app/core/constants/app_text_styles.dart';
 import 'package:product_listing_app/core/router/app_routes.dart';
+import 'package:product_listing_app/core/theme/app_colors.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:product_listing_app/core/utils/snackbar.dart';
 import 'package:product_listing_app/core/widgets/custom_button.dart';
@@ -71,6 +72,7 @@ class OtpScreen extends StatelessWidget {
                         showCustomSnackBar(
                           context: context,
                           message: 'Login Success!',
+                          backgroundColor: AppColors.successColor
                         );
                       } else {
                         context.pushNamed(
@@ -79,9 +81,7 @@ class OtpScreen extends StatelessWidget {
                         );
                       }
                     } else if (state is AuthFailure) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(state.message)),
-                      );
+                      showCustomSnackBar(context: context, message: state.message);
                     }
                   },
                   builder: (context, state) {

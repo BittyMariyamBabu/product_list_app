@@ -5,6 +5,7 @@ import 'package:product_listing_app/core/widgets/common_title.dart';
 import 'package:product_listing_app/feature/home/presentation/bloc/product/product_bloc.dart';
 import 'package:product_listing_app/feature/home/presentation/bloc/product/product_event.dart';
 import 'package:product_listing_app/feature/home/presentation/bloc/product/product_state.dart';
+import 'package:product_listing_app/feature/home/presentation/widgets/product_shimmer.dart';
 import 'package:product_listing_app/feature/home/presentation/widgets/project_card.dart';
 
 class ListProjects extends StatelessWidget {
@@ -24,7 +25,7 @@ class ListProjects extends StatelessWidget {
             context.read<ProductBloc>().add(LoadProduct());
             return const Center(child: Text("Loading..."));
           } else if (state is ProductLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return ProductGridShimmer();
           } else if (state is ProductLoaded) {
             return GridView.builder(
               shrinkWrap: true,                // tells GridView to take only needed space

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:product_listing_app/core/constants/app_paddings.dart';
 import 'package:product_listing_app/core/constants/app_strings.dart';
 import 'package:product_listing_app/core/router/app_routes.dart';
+import 'package:product_listing_app/core/theme/app_colors.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:product_listing_app/core/utils/snackbar.dart';
 import 'package:product_listing_app/core/utils/validators.dart';
@@ -63,7 +64,10 @@ class NameScreen extends StatelessWidget {
                     listener: (context, state) {
                       if (state is AuthSuccess) {
                         context.pushNamed(RouteName.main);
-                        showCustomSnackBar(context: context, message: 'Sign Up Success!');
+                        showCustomSnackBar(
+                          context: context, 
+                          message: 'Sign Up Success!',
+                          backgroundColor: AppColors.successColor);
                       } else if (state is AuthFailure) {
                         showCustomSnackBar(context: context, message: state.message);
                       }

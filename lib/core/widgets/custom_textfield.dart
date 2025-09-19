@@ -49,6 +49,9 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         keyboardType: keyboardType,
         validator: validator,
+        style: isSearch 
+          ? AppTextStyles.latoRegular14
+          : AppTextStyles.labelText,
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: isSearch 

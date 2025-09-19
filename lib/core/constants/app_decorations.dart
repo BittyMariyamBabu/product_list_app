@@ -7,6 +7,7 @@ class AppDecorations {
   AppDecorations._(); // Private constructor
 
   static final BorderRadius borderRadius10 = BorderRadius.circular(Responsive.radius(10));
+  static final BorderRadius borderRadius25 = BorderRadius.circular(Responsive.radius(25));
   static final BorderRadius borderRadius45 = BorderRadius.circular(Responsive.radius(45));
   static final BorderRadius borderRadius50 = BorderRadius.circular(Responsive.radius(50));
   static final BorderRadius borderRadius8 = BorderRadius.circular(Responsive.radius(8));
@@ -30,7 +31,10 @@ class AppDecorations {
   );
 
   static final RoundedRectangleBorder buttonBorder = RoundedRectangleBorder(
-     borderRadius: borderRadius10);
+     borderRadius: borderRadius25);
+
+  static final RoundedRectangleBorder buttonBorder1 = RoundedRectangleBorder(
+     borderRadius: borderRadius45);
   
   static final RoundedRectangleBorder roundedbuttonBorder = RoundedRectangleBorder(
      borderRadius: borderRadius10);

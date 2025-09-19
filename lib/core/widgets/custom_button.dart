@@ -26,7 +26,7 @@ class CustomButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           shape: isWishList 
           ? AppDecorations.roundedbuttonBorder
-          : AppDecorations.buttonBorder,
+          : AppDecorations.buttonBorder1,
         ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading

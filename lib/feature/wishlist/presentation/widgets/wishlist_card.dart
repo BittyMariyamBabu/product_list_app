@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_listing_app/core/utils/responsive.dart';
 import 'package:product_listing_app/core/widgets/common_title.dart';
 import 'package:product_listing_app/core/widgets/empty_widget.dart';
+import 'package:product_listing_app/feature/home/presentation/widgets/product_shimmer.dart';
 import 'package:product_listing_app/feature/home/presentation/widgets/project_card.dart';
 import 'package:product_listing_app/feature/wishlist/presentation/bloc/wishlist_bloc.dart';
 import 'package:product_listing_app/feature/wishlist/presentation/bloc/wishlist_event.dart';
@@ -25,7 +26,7 @@ class WishProjects extends StatelessWidget {
             context.read<WishlistBloc>().add(LoadWishlist());
             return const Center(child: Text("Loading..."));
           } else if (state is WishlistLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return ProductGridShimmer();
           } else if (state is WishlistLoaded) {
             if (state.wishlist.isEmpty) {
                 return EmptyWishlist(); // Show empty UI

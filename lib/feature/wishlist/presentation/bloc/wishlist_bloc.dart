@@ -34,7 +34,7 @@ class WishlistBloc extends Bloc<WishlistEvent, WishlistState> {
       if (state is WishlistLoaded) {
         final currentState = state as WishlistLoaded;
 
-        // Optimistic update: update local list first
+        // update local list first
         List<WishListEntity> updatedWishlist = List.from(currentState.wishlist);
 
         if (updatedWishlist.any((p) => p.id == event.product.id)) {

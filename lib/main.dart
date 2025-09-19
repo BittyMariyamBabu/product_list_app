@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:product_listing_app/core/constants/app_strings.dart';
 import 'package:product_listing_app/core/theme/app_themes.dart';
@@ -8,6 +9,8 @@ import 'package:product_listing_app/injection.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await init(); // 
+  // Load env before runApp
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 

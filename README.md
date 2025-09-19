@@ -26,12 +26,11 @@ A Flutter app for browsing products, managing wishlist, and viewing banners with
 ### Prerequisites
 - Flutter 3.35.3
 - Dart >= 3.9.2
-- Android
 
 ### Installation
 ```bash
-git clone <repo-url>
-cd project_name
+git clone https://github.com/BittyMariyamBabu/product_list_app.git
+cd product_listing_app
 flutter pub get
 flutter run
 

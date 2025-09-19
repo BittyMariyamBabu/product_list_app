@@ -87,8 +87,8 @@ class _PinInputFieldState extends State<PinInputField> {
     }
   }
 
-  void _onKey(RawKeyEvent event, int index) {
-    if (event is RawKeyDownEvent &&
+  void _onKey(KeyEvent event, int index) {
+    if (event is KeyDownEvent &&
         event.logicalKey.keyLabel == 'Backspace' &&
         _controllers[index].text.isEmpty &&
         index > 0) {
@@ -110,16 +110,16 @@ class _PinInputFieldState extends State<PinInputField> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha:0.1),
                 blurRadius: 6,
                 offset: const Offset(2, 2),
               ),
             ],
           ),
           alignment: Alignment.center,
-          child: RawKeyboardListener(
+          child: KeyboardListener(
             focusNode: FocusNode(), // for capturing backspace
-            onKey: (event) => _onKey(event, index),
+            onKeyEvent: (event) => _onKey(event, index),
             child: TextField(
               controller: _controllers[index],
               focusNode: _focusNodes[index],

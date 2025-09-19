@@ -29,33 +29,4 @@ class AppTheme {
     ),
   );
 
-  /// Dark Theme
-  static ThemeData darkTheme = ThemeData(
-    fontFamily: 'Oxygen',
-    brightness: Brightness.dark,
-    scaffoldBackgroundColor: Colors.black,
-    primaryColor: AppColors.primary,
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.black,
-      foregroundColor: AppColors.primary,
-      elevation: 0,
-      // titleTextStyle: AppTextStyles.appBarTitle.copyWith(color: AppColors.primary),
-    ),
-    // textTheme: AppTextStyles.textTheme.apply(
-    //   bodyColor: AppColors.background,
-    //   displayColor: AppColors.background,
-    // ),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: AppColors.primary,
-      foregroundColor: Colors.black,
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.black,
-        // textStyle: AppTextStyles.button,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-    ),
-  );
 }

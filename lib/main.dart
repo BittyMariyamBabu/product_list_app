@@ -26,8 +26,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: AppStrings.productList,
           theme: AppTheme.lightTheme,  //  Light mode
-          darkTheme: AppTheme.darkTheme, //  Dark mode
-          themeMode: ThemeMode.system,   // Switches automatically
         );
       }
     );
